@@ -20,6 +20,29 @@ module unsigned_int32
    public :: operator(-)
    interface operator(-)
       module procedure :: uint32_sub_uint32
+      module procedure :: uint32_sub_int32, int32_sub_uint32
+      module procedure :: uint32_sub_int64, int64_sub_uint32
+   end interface 
+
+   public :: operator(*)
+   interface operator(*)
+      module procedure :: uint32_mul_uint32
+      module procedure :: uint32_mul_int32, int32_mul_uint32
+      module procedure :: uint32_mul_int64, int64_mul_uint32
+   end interface 
+
+   public :: operator( / )
+   interface operator(/)
+      module procedure :: uint32_div_uint32
+      module procedure :: uint32_div_int32, int32_div_uint32
+      module procedure :: uint32_div_int64, int64_div_uint32
+   end interface 
+
+   public :: operator(**)
+   interface operator(**)
+      module procedure :: uint32_pow_uint32
+      module procedure :: uint32_pow_int32, int32_pow_uint32
+      module procedure :: uint32_pow_int64, int64_pow_uint32
    end interface 
 
    public :: assignment(=)
@@ -68,6 +91,13 @@ module unsigned_int32
       module procedure :: uint32_eq_int64, int64_eq_uint32
    end interface 
    
+   !---------------------------------------------------------!
+   public :: operator(/=)
+   interface operator(/=)
+      module procedure :: uint32_ne_uint32
+      module procedure :: uint32_ne_int32, int32_ne_uint32
+      module procedure :: uint32_ne_int64, int64_ne_uint32
+   end interface 
 
 
    public :: write(formatted)
@@ -323,6 +353,209 @@ contains
    end function uint32_sub_uint32
 
 
+   function uint32_sub_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      integer(int64) :: res
+
+      res = validate(ua) - b
+   end function 
+
+   
+   function int32_sub_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int32), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+
+      res = a - validate(ub)
+   end function int32_sub_uint32
+   
+
+   function uint32_sub_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      integer(int64) :: res
+      res = validate(ua) - b
+   end function uint32_sub_int64
+
+   
+   function int64_sub_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int64), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+      res = a - validate(ub)
+   end function int64_sub_uint32
+
+
+   !==================================================================!
+   ! Multiplication
+
+   function uint32_mul_uint32(ua, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua, ub
+      type(uint32) :: res
+      res%u32 = validate(ua)*validate(ub)
+
+   end function uint32_mul_uint32
+
+
+   function uint32_mul_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      integer(int64) :: res
+
+      res = validate(ua) * b
+   end function uint32_mul_int32
+
+   
+   function int32_mul_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int32), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+
+      res = a * validate(ub)
+   end function int32_mul_uint32
+   
+
+   function uint32_mul_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      integer(int64) :: res
+      res = validate(ua) * b
+   end function uint32_mul_int64
+
+   
+   function int64_mul_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int64), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+      res = a * validate(ub)
+   end function int64_mul_uint32
+
+   !==================================================================!
+   ! Power
+
+   function uint32_pow_uint32(ua, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua, ub
+      integer(int64) :: res
+      res = validate(ua)**validate(ub)
+
+   end function uint32_pow_uint32
+
+
+   function uint32_pow_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      integer(int64) :: res
+
+      res = validate(ua) ** b
+   end function uint32_pow_int32
+
+   
+   function int32_pow_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int32), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+
+      res = a ** validate(ub)
+   end function int32_pow_uint32
+   
+
+   function uint32_pow_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      integer(int64) :: res
+      res = validate(ua) ** b
+   end function uint32_pow_int64
+
+   
+   function int64_pow_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int64), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+      res = a ** validate(ub)
+   end function int64_pow_uint32
+
+   !==================================================================!
+   ! Division
+   function uint32_div_uint32(ua, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua, ub
+      integer(int64) :: res
+
+      res = validate(ua) / validate(ub)
+   end function uint32_div_uint32
+
+
+   function uint32_div_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      integer(int64) :: res
+
+      res = validate(ua) / b
+   end function 
+
+   
+   function int32_div_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int32), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+
+      res = a / validate(ub)
+   end function int32_div_uint32
+   
+
+   function uint32_div_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      integer(int64) :: res
+      res = validate(ua) / b
+   end function uint32_div_int64
+
+   
+   function int64_div_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int64), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+      res = a / validate(ub)
+   end function int64_div_uint32
+
    !==================================================================!
    ! Comparison
 
@@ -536,7 +769,7 @@ contains
       implicit none
       type(uint32), intent(in) :: ua, ub
       logical :: res  
-      res = validate(ua) == validate(ub)
+      res = ua%u32 == ub%u32
    end function 
    
    
@@ -579,4 +812,55 @@ contains
       res = a == validate(ub)
    end function int64_eq_uint32
 
+
+      !--------------------------------------------!
+   ! Not equal
+   function uint32_ne_uint32 (ua, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua, ub
+      logical :: res  
+      res = ua%u32 /= ub%u32
+   end function 
+   
+   
+   function uint32_ne_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res
+      res = validate(ua) /= b 
+   end function uint32_ne_int32
+   
+   
+   function uint32_ne_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int64), intent(in) :: b 
+      logical :: res
+      res = validate(ua) /= b
+   end function uint32_ne_int64
+   
+   
+   function int32_ne_uint32(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ub 
+      integer(int32), intent(in) :: a
+      logical :: res 
+      res = a /= validate(ub)
+   end function int32_ne_uint32
+   
+   
+   function int64_ne_uint32(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ub
+      integer(int64), intent(in) :: a
+      logical :: res 
+      res = a /= validate(ub)
+   end function int64_ne_uint32
+   
 end module unsigned_int32
