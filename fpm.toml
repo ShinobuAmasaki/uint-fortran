@@ -10,7 +10,7 @@ auto-tests = true
 auto-examples = true
 module-naming = false
 [install]
-library = false
+library = true
 [fortran]
 implicit-typing = false
 implicit-external = false
