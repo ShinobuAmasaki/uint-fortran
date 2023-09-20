@@ -99,11 +99,36 @@ module unsigned_int32
       module procedure :: uint32_ne_int64, int64_ne_uint32
    end interface 
 
+   !=========================================================!
+   ! Modulo
+   public :: mod
+   interface mod
+      module procedure :: uint32_mod_uint32
+      module procedure :: uint32_mod_int32, int32_mod_uint32
+      module procedure :: uint32_mod_int64, int64_mod_uint32
+   end interface 
 
+   !========================================================!
    public :: write(formatted)
    interface write(formatted)
-      procedure :: print_uint32
+      procedure :: write_uint32_formatted
    end interface
+
+   public :: write(unformatted)
+   interface write(unformatted)
+      procedure :: write_uint32_unformatted
+   end interface
+
+   public :: read(formatted)
+   interface read(formatted)
+      procedure :: read_uint32_formatted
+   end interface
+   
+   public :: read(unformatted)
+   interface read(unformatted)
+      procedure :: read_uint32_unformatted
+   end interface
+   !========================================================!
 
    public :: pick
    interface pick
@@ -175,8 +200,74 @@ contains
    
    end function validate
 
+   !=====================================================================!
+   subroutine read_uint32_unformatted(self, unit, iostatus, iomessage)
+      implicit none
+      class(uint32), intent(inout) :: self
+      integer,       intent(in) :: unit
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
 
-   subroutine print_uint32 (self, unit, iotype, arglist, iostatus, iomessage)
+      read(unit=unit, iostat=iostatus, iomsg=iomessage) self%u32
+   end subroutine read_uint32_unformatted
+
+
+   subroutine write_uint32_unformatted(self, unit, iostatus, iomessage)
+      implicit none
+      class(uint32), intent(in) :: self
+      integer,       intent(in) :: unit
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+
+      write(unit=unit, iostat=iostatus, iomsg=iomessage) self%u32
+   end subroutine write_uint32_unformatted
+
+
+   subroutine read_uint32_formatted (self, unit, iotype, arglist, iostatus, iomessage)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      class(uint32), intent(inout) :: self
+      integer,       intent(in) :: unit
+      character(*),  intent(in) :: iotype
+      integer,       intent(in) :: arglist(:)
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+   
+      integer(int64) :: buf 
+   
+      if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
+         read(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) buf
+         self = buf
+         return
+      else
+         if (iotype(3:) /= "u32" .or. iotype(3:) /= "U32") then
+            print *, "Error: type mismatch"
+         end if
+   
+         block
+            character(2) :: width_total, width_minimal
+            character(6) :: Spec
+            character(:), allocatable :: fmt
+   
+            write(width_total, '(I2)') arglist(1)
+            write(width_minimal, '(I2)') arglist(2)
+   
+            if (size(arglist,dim=1) == 1) then
+               spec = 'I'//width_total
+            else
+               spec = 'I'//width_total//'.'//width_minimal
+            end if
+   
+            fmt = "'("//spec//")'"
+   
+            read(unit=unit, fmt=fmt, iostat=iostatus, iomsg=iomessage) buf
+            self = buf
+         end block
+      end if
+   end subroutine read_uint32_formatted
+
+
+   subroutine write_uint32_formatted (self, unit, iotype, arglist, iostatus, iomessage)
       implicit none
       class(uint32), intent(in) :: self
       integer,       intent(in) :: unit
@@ -189,19 +280,30 @@ contains
          write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) validate(self)
          return
       else
-         if (iotype(3:) /= "u") then
+         if (iotype(3:) /= "u32" .or. iotype(3:) /= "U32") then
             print *, "Error: type mismatch"
          end if
 
          block
-            character(3) :: width_total, width_decimal
-            character(6) :: unit_spec
+            character(2) :: width_total, width_minimal
+            character(6) :: Spec
             character(:), allocatable :: fmt
+   
+            write(width_total, '(I2)') arglist(1)
+            write(width_minimal, '(I2)') arglist(2)
+   
+            if (size(arglist,dim=1) == 1) then
+               spec = 'I'//width_total
+            else
+               spec = 'I'//width_total//'.'//width_minimal
+            end if
+   
+            fmt = "'("//spec//")'"
 
-            write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) validate(self)
+            write(unit=unit, fmt=fmt, iostat=iostatus, iomsg=iomessage) validate(self)
          end block
       end if
-   end subroutine print_uint32
+   end subroutine write_uint32_formatted
 
    !==================================================================!
    ! Casting
@@ -863,4 +965,57 @@ contains
       res = a /= validate(ub)
    end function int64_ne_uint32
    
+   !==================================================================!
+   ! Modulo operation
+   function uint32_mod_uint32(ua, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua, ub
+      type(uint32) :: res
+
+      res = mod(validate(ua), validate(ub))
+   end function uint32_mod_uint32
+
+
+   function uint32_mod_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      integer(int64) :: res
+
+      res = mod(validate(ua),b)
+   end function 
+
+   
+   function int32_mod_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int32), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+
+      res = mod(a,validate(ub))
+   end function int32_mod_uint32
+   
+
+   function uint32_mod_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      integer(int64) :: res
+      res = mod( validate(ua), b)
+   end function uint32_mod_int64
+
+   
+   function int64_mod_uint32 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int64), intent(in) :: a
+      type(uint32), intent(in) :: ub
+      integer(int64) :: res
+      res = mod(a, validate(ub))
+   end function int64_mod_uint32
+
 end module unsigned_int32
