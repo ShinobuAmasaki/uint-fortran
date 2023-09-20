@@ -33,13 +33,20 @@ module unsigned_int16
       module procedure :: uint16_mul_uint16
    end interface 
 
-   public :: operator(/)
+   public :: operator( / )
    interface  operator(/)
       module procedure :: uint16_div_int16, int16_div_uint16
       module procedure :: uint16_div_int32, int32_div_uint16
       module procedure :: uint16_div_int64, int64_div_uint16
       module procedure :: uint16_div_uint16
    end interface 
+
+   ! public :: operator(<)
+   ! public :: operator(>)
+   ! public :: operator(<=)
+   ! public :: operator(>=)
+   ! public :: operator(/=)
+   ! public :: operator(==)
 
    public:: assignment(=)
    interface assignment(=)
@@ -69,6 +76,11 @@ module unsigned_int16
    public :: write(formatted)
    interface write(formatted)
       procedure :: print_uint16
+   end interface
+
+   public :: pick
+   interface pick
+      module procedure :: validate
    end interface
 
 contains
@@ -249,7 +261,7 @@ contains
       type(uint16), intent(in)   :: ua
       integer(int32) :: res
 
-      res = validate(ua) + a 
+      res = a + validate(ua) 
 
    end function
 

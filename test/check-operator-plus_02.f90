@@ -5,7 +5,8 @@ program check
 
    character(32) :: ustr, str
 
-   type(uint16) :: ua, ub, uans
+   integer :: count
+   type(uint16) :: ua, uans
    integer(int32) :: a, b, ix,i, ans
    real :: x
    integer :: n = 10000000
@@ -15,6 +16,7 @@ program check
    ustr = ''
    str = '' 
 
+   count = 0
    do i = 1, n
       call random_number(x)
       ix = int(x*65335)
@@ -24,10 +26,9 @@ program check
       call random_number(x)
       ix = int(x*65335)
       b = ix
-      ub = ix
 
-      ans = a * b
-      uans = ua*ub
+      ans = a + b
+      uans = ua+b
       
       
       if (ans >65535 .or. ans < 0) cycle
@@ -39,10 +40,10 @@ program check
          write (*, *) a, b, ans, uans
          isPassed = .false.
       end if
-
+      count = count + 1
    end do
 
-   if (isPassed) print *, "[Test] uint16 * uint16: Passed"
+   if (isPassed) print *, "[Test] uint16 + int16 : Passed, ", count, " cases."
 
    
 end program check
