@@ -67,7 +67,7 @@ Suppose you have a C code that takes an unsigned integer as an argument and prin
 void unsigned_val_print(unsigned int val )
 {
    printf("%u\n", val);
-   return 0;
+   return;
 }
 ```
 
