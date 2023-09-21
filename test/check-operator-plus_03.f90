@@ -1,7 +1,7 @@
 
 program check
    use :: iso_fortran_env
-   use :: unsigned_int16
+   use :: unsigned
    implicit none
 
    character(32) :: ustr, str
