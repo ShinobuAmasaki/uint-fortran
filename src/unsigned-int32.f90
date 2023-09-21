@@ -130,11 +130,6 @@ module unsigned_int32
    end interface
    !========================================================!
 
-   public :: pick
-   interface pick
-      module procedure :: validate
-   end interface 
-
    public :: int
    interface int
       module procedure :: cast_to_int64
@@ -201,6 +196,8 @@ contains
    end function validate
 
    !=====================================================================!
+   ! Derived type I/O
+
    subroutine read_uint32_unformatted(self, unit, iostatus, iomessage)
       implicit none
       class(uint32), intent(inout) :: self
