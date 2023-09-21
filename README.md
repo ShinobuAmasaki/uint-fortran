@@ -135,7 +135,7 @@ end program main
 The `uint32` derived type is declared within the `unsigned_int32` module as follows:
 
 ```fortran
-   type, public :: uint32
+   type, public, bind(c) :: uint32
       integer(int32) :: u32
    end type uint32
 ```
