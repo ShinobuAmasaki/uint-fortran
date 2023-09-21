@@ -1,10 +1,11 @@
-# uint-fortran — Unsigned Integer in Fortran Interoperable with C
+# uint-fortran
+`uint-fortran`—Unsigned Integer in Fortran Interoperable with C
 In Fortran, handling unsigned integers that are interoperable with C can be a bit troublesome,
 as Fortran natively does not contain unsigned integer types.
 
 However, with the `uint-fortran` package, you can work with unsigned integer seemlessly.
 
-Let's break down how to use this package and demonstrate its interoperability with a C function.
+Let's break down how to use this package and demonstrate its interoperability with C functions.
 
 ## Build
 
