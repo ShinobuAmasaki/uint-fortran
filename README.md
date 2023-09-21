@@ -1,4 +1,4 @@
-# Unsigned Integer in Fortran Interoperable with C
+# uint-fortran — Unsigned Integer in Fortran Interoperable with C
 In Fortran, handling unsigned integers that are interoperable with C can be a bit troublesome,
 as Fortran natively does not contain unsigned integer types.
 However, with the `uint-fortran` package, you can work with unsigned integer seemlessly.
@@ -30,6 +30,33 @@ Now, you can declare unsigned integer variables of various bit lengths, such as 
 ```fortran
 type(uint32) :: a
 ```
+
+### Assignment and Operations
+
+You can assign values to `uint32` variables just like regular integer types:
+
+```fortran
+a = 3456
+```
+However, if you attempt to assign a negative number, it will underflow:
+
+```fortran
+a = -10
+print *, a   ! This will print '4294967286'.
+```
+
+If you assign  a number greater than 4294967295, it will overflow:
+
+```fortran
+a = 4294967296_8
+print *, a   ! This will print '0'.
+```
+
+If you want to use a `uint32` value as an `integer(8)` type, you can do so by using the `int` function that is overloaded.
+```
+int(a)
+```
+
 
 ### Interoperability with C 
 
