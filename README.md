@@ -106,7 +106,7 @@ Running this code will display the result, which in this case would be `42949672
 Of course, you can also use these unsigned integers Fortran itself.
 
 ```
-print *, a 　　! This will print the same value, 4294967295
+print *, a 　　! This will display the same value, 4294967295
 ```
 
 
@@ -132,7 +132,7 @@ program main
 
       call unsigned_val_print(a%u32)
 
-      print *, a    ! This will print the same value 4294967295 to standard output.
+      print *, a    ! This will display the same value 4294967295 to standard output.
    end block
 
 end program main 
@@ -164,7 +164,7 @@ interface
    end function return_unsigned
 end interface 
 ```
-
+ 
 By declaring this interface, you can use the function in Fortran.
 
 When a function returns a `uint32`, you simply assign it to a regular derived type variable,
