@@ -5,7 +5,7 @@ module unsigned_int16
    
    integer(int32), parameter :: UINT16_LIMIT = 65535
 
-   type, public :: uint16
+   type, public, bind(c) :: uint16
       integer(int16) :: u16   !0から32767までは同一、-32768から-1の値の場合は+65536する     
    end type uint16
 
@@ -135,7 +135,7 @@ contains
    ! Writing
    subroutine print_uint16 (self, unit, iotype, arglist, iostatus, iomessage)
       implicit none
-      class(uint16), intent(in   ) :: self
+      type(uint16), intent(in   ) :: self
       integer,       intent(in   ) :: unit
       character(*),  intent(in   ) :: iotype
       integer,       intent(in   ) :: arglist(:)

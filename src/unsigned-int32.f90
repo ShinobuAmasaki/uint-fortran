@@ -6,7 +6,7 @@ module unsigned_int32
 
    integer(int64), parameter :: UINT32_LIMIT = 4294967295_int64
 
-   type, public :: uint32
+   type, public, bind(c) :: uint32
       integer(int32) :: u32
    end type uint32
 
@@ -200,7 +200,7 @@ contains
 
    subroutine read_uint32_unformatted(self, unit, iostatus, iomessage)
       implicit none
-      class(uint32), intent(inout) :: self
+      type(uint32), intent(inout) :: self
       integer,       intent(in) :: unit
       integer,       intent(out) :: iostatus
       character(*), intent(inout) :: iomessage
@@ -211,7 +211,7 @@ contains
 
    subroutine write_uint32_unformatted(self, unit, iostatus, iomessage)
       implicit none
-      class(uint32), intent(in) :: self
+      type(uint32), intent(in) :: self
       integer,       intent(in) :: unit
       integer,       intent(out) :: iostatus
       character(*), intent(inout) :: iomessage
@@ -223,7 +223,7 @@ contains
    subroutine read_uint32_formatted (self, unit, iotype, arglist, iostatus, iomessage)
       use, intrinsic :: iso_fortran_env
       implicit none
-      class(uint32), intent(inout) :: self
+      type(uint32), intent(inout) :: self
       integer,       intent(in) :: unit
       character(*),  intent(in) :: iotype
       integer,       intent(in) :: arglist(:)
@@ -266,7 +266,7 @@ contains
 
    subroutine write_uint32_formatted (self, unit, iotype, arglist, iostatus, iomessage)
       implicit none
-      class(uint32), intent(in) :: self
+      type(uint32), intent(in) :: self
       integer,       intent(in) :: unit
       character(*),  intent(in) :: iotype
       integer,       intent(in) :: arglist(:)
