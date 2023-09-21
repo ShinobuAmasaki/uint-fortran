@@ -1,7 +1,9 @@
 # uint-fortran — Unsigned Integer in Fortran Interoperable with C
 In Fortran, handling unsigned integers that are interoperable with C can be a bit troublesome,
 as Fortran natively does not contain unsigned integer types.
+
 However, with the `uint-fortran` package, you can work with unsigned integer seemlessly.
+
 Let's break down how to use this package and demonstrate its interoperability with a C function.
 
 ## Build
@@ -58,7 +60,11 @@ int(a)
 ```
 
 
-### Interoperability with C 
+## Interoperability with C 
+
+### Call C Function from Fortran
+
+#### 1. Pass `uint32` as an Argument
 
 Suppose you have a C code that takes an unsigned integer as an argument and prints it using `printf`.
 ```c
@@ -119,15 +125,89 @@ program main
       end subroutine unsigned_val_print
    end interface
 
-   type(uint32) :: a 
-   
-   a = 4294967295_8
+   block
+      type(uint32) :: a 
+      
+      a = 4294967295_8
 
-   call unsigned_val_print(a%u32)
+      call unsigned_val_print(a%u32)
 
-   print *, a
+      print *, a    ! This will print the same value 4294967295 to standard output.
+   end block
 
 end program main 
+```
+
+#### 2. Getting a `uint32` as a Returned Value from C
+
+Next, let's consider a C function that always returns the value `2333444555`, which exceeds
+the range of 32-bit signed integer:
+
+```c
+unsigned int return_unsigned(void)
+{
+   unsigned int val = 2333444555;
+   return val;
+}
+```
+
+To call this C function from Fortran, you can create a Fortran interface like this:
+
+```fortran
+use unsigned
+
+interface
+   function return_unsigned () bind(c, name='return_unsigned') result(res)
+      import uint32
+      implicit none
+      type(uint32) :: res
+   end function return_unsigned
+end interface 
+```
+
+By declaring this interface, you can use the function in Fortran.
+
+When a function returns a `uint32`, you simply assign it to a regular derived type variable,
+just like this:
+
+```
+block
+   type(uint32) :: result
+   result = return_unsigned()
+
+   print *, result
+end block
+```
+
+Running this code will correctly display the value previously defined in C on the standard output:
+
+```
+   2333444555
+```
+
+Here's the complete Fortran code used this example:
+
+```fortran
+program main
+   use unsigned
+   implicit none 
+
+   interface
+      function return_unsigned () bind(c, name='return_unsigned') result(res)
+         import uint32
+         implicit none
+         type(uint32) :: res
+      end function return_unsigned
+   end interface 
+
+   block
+      type(uint32) :: result
+      result = return_unsigned()
+
+      print *, result
+   end block
+
+end program main
 ```
 
 ## Internal Structure
@@ -140,6 +220,8 @@ The `uint32` derived type is declared within the `unsigned_int32` module as foll
    end type uint32
 ```
 
-Internally, it simply contains a signed integer with the same 32-bit length. To enable
-proper handling of `uint32` as an unsigned integer in Fortran, operator overload for assginment,
-arithmetic operations, comparison operations, and exponentiation, as well as derived type I/O feature, are utilized.
+Internally, it simply contains a signed integer with the same 32-bit length.
+
+To enable proper handling of `uint32` as an unsigned integer in Fortran, operator
+overload for assginment, arithmetic operations, comparison operations,
+and exponentiation, as well as derived type I/O feature, are utilized.
