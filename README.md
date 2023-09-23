@@ -20,7 +20,7 @@ uint-fortran = {git ="https://github.com/ShinobuAmasaki/uint-fortran"}
 ## Usage
 
 ### `use` statement 
-To use the `uint-fortran` package, start by including the `unsigned` and `unsigned` module in your Fortran program.
+To use the `uint-fortran` package, start by including the `unsigned` module in your Fortran program.
 
 ```fortran
 use unsigned
@@ -30,7 +30,7 @@ Make sure not to use the `only:` clause with this module to ensure proper operat
 
 ### Declaration
 
-Now, you can declare unsigned integer variables of various bit lengths, such as `uint32` and `uint16`.
+Now, you can declare unsigned integer variables of 32- and 16-bit lengths, such as `uint32` and `uint16`.
 
 ```fortran
 type(uint32) :: a
