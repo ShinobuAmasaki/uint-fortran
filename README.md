@@ -17,6 +17,11 @@ Add below in `fpm.toml` of your package.
 uint-fortran = {git ="https://github.com/ShinobuAmasaki/uint-fortran"}
 ```
 
+Supported compilers are below:
+- GNU Fortran Compiler (`gfortran`, tested on v12.3.1)
+- Intel oneAPI Fortran Compier Classic (`ifort`, tested on `ifort (IFORT) 2021.9.0 20230302`)
+- Intel oneAPI Fortran Compier (`ifx`, tested on `ifx (IFX) 2023.1.0 20230320`)
+
 ## Usage
 
 ### `use` statement 

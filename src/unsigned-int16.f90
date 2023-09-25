@@ -6,7 +6,7 @@ module unsigned_int16
    integer(int32), parameter :: UINT16_LIMIT = 65535
 
    type, public, bind(c) :: uint16
-      integer(int16) :: u16   !0から32767までは同一、-32768から-1の値の場合は+65536する     
+      integer(int16) :: u16   !0から32767までは同一、-32768から-1の値の場合は+65536する  
    end type uint16
 
    public :: operator(+)
@@ -73,11 +73,6 @@ module unsigned_int16
       module procedure :: cast_to_complex_64
    end interface cmplx
 
-   public :: write(formatted)
-   interface write(formatted)
-      procedure :: print_uint16
-   end interface
-
    public :: pick
    interface pick
       module procedure :: validate
@@ -132,36 +127,6 @@ contains
    end function validate
 
 
-   ! Writing
-   subroutine print_uint16 (self, unit, iotype, arglist, iostatus, iomessage)
-      implicit none
-      type(uint16), intent(in   ) :: self
-      integer,       intent(in   ) :: unit
-      character(*),  intent(in   ) :: iotype
-      integer,       intent(in   ) :: arglist(:)
-      integer,       intent(  out) :: iostatus
-      character(*),  intent(inout) :: iomessage
-
-      if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
-         write(unit=unit, fmt= *, iostat=iostatus, iomsg=iomessage) validate(self)
-         return
-      else
-         if (iotype(3:) /= "uint16") then
-            print *, "Error: type mismatch"
-            return
-         end if
-
-         block
-            character(2) :: width_total, width_decimal
-            character(6) :: uint_spec
-            character(:), allocatable :: fmt
-            
-            write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) validate(self)
-         end block
-      end if
-
-   end subroutine print_uint16
-   
    ! Casting
 
    function cast_to_int32(ua) result(res)

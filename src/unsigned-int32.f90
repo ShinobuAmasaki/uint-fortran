@@ -109,26 +109,6 @@ module unsigned_int32
    end interface 
 
    !========================================================!
-   public :: write(formatted)
-   interface write(formatted)
-      procedure :: write_uint32_formatted
-   end interface
-
-   public :: write(unformatted)
-   interface write(unformatted)
-      procedure :: write_uint32_unformatted
-   end interface
-
-   public :: read(formatted)
-   interface read(formatted)
-      procedure :: read_uint32_formatted
-   end interface
-   
-   public :: read(unformatted)
-   interface read(unformatted)
-      procedure :: read_uint32_unformatted
-   end interface
-   !========================================================!
 
    public :: int
    interface int
@@ -149,6 +129,11 @@ module unsigned_int32
    interface cmplx
       module procedure :: cast_to_complex_64_im, cast_to_complex_64_re
    end interface cmplx
+
+   public :: pick
+   interface pick
+      module procedure :: validate
+   end interface
 
 contains
 
@@ -195,112 +180,6 @@ contains
    
    end function validate
 
-   !=====================================================================!
-   ! Derived type I/O
-
-   subroutine read_uint32_unformatted(self, unit, iostatus, iomessage)
-      implicit none
-      type(uint32), intent(inout) :: self
-      integer,       intent(in) :: unit
-      integer,       intent(out) :: iostatus
-      character(*), intent(inout) :: iomessage
-
-      read(unit=unit, iostat=iostatus, iomsg=iomessage) self%u32
-   end subroutine read_uint32_unformatted
-
-
-   subroutine write_uint32_unformatted(self, unit, iostatus, iomessage)
-      implicit none
-      type(uint32), intent(in) :: self
-      integer,       intent(in) :: unit
-      integer,       intent(out) :: iostatus
-      character(*), intent(inout) :: iomessage
-
-      write(unit=unit, iostat=iostatus, iomsg=iomessage) self%u32
-   end subroutine write_uint32_unformatted
-
-
-   subroutine read_uint32_formatted (self, unit, iotype, arglist, iostatus, iomessage)
-      use, intrinsic :: iso_fortran_env
-      implicit none
-      type(uint32), intent(inout) :: self
-      integer,       intent(in) :: unit
-      character(*),  intent(in) :: iotype
-      integer,       intent(in) :: arglist(:)
-      integer,       intent(out) :: iostatus
-      character(*), intent(inout) :: iomessage
-   
-      integer(int64) :: buf 
-   
-      if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
-         read(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) buf
-         self = buf
-         return
-      else
-         if (iotype(3:) /= "u32" .or. iotype(3:) /= "U32") then
-            print *, "Error: type mismatch"
-         end if
-   
-         block
-            character(2) :: width_total, width_minimal
-            character(6) :: Spec
-            character(:), allocatable :: fmt
-   
-            write(width_total, '(I2)') arglist(1)
-            write(width_minimal, '(I2)') arglist(2)
-   
-            if (size(arglist,dim=1) == 1) then
-               spec = 'I'//width_total
-            else
-               spec = 'I'//width_total//'.'//width_minimal
-            end if
-   
-            fmt = "'("//spec//")'"
-   
-            read(unit=unit, fmt=fmt, iostat=iostatus, iomsg=iomessage) buf
-            self = buf
-         end block
-      end if
-   end subroutine read_uint32_formatted
-
-
-   subroutine write_uint32_formatted (self, unit, iotype, arglist, iostatus, iomessage)
-      implicit none
-      type(uint32), intent(in) :: self
-      integer,       intent(in) :: unit
-      character(*),  intent(in) :: iotype
-      integer,       intent(in) :: arglist(:)
-      integer,       intent(out) :: iostatus
-      character(*), intent(inout) :: iomessage
-
-      if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
-         write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) validate(self)
-         return
-      else
-         if (iotype(3:) /= "u32" .or. iotype(3:) /= "U32") then
-            print *, "Error: type mismatch"
-         end if
-
-         block
-            character(2) :: width_total, width_minimal
-            character(6) :: Spec
-            character(:), allocatable :: fmt
-   
-            write(width_total, '(I2)') arglist(1)
-            write(width_minimal, '(I2)') arglist(2)
-   
-            if (size(arglist,dim=1) == 1) then
-               spec = 'I'//width_total
-            else
-               spec = 'I'//width_total//'.'//width_minimal
-            end if
-   
-            fmt = "'("//spec//")'"
-
-            write(unit=unit, fmt=fmt, iostat=iostatus, iomsg=iomessage) validate(self)
-         end block
-      end if
-   end subroutine write_uint32_formatted
 
    !==================================================================!
    ! Casting
