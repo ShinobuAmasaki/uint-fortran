@@ -1,12 +1,13 @@
 module unsigned_int16 
    use, intrinsic :: iso_fortran_env
+   use, intrinsic :: iso_c_binding
    implicit none
    private
    
    integer(int32), parameter :: UINT16_LIMIT = 65535
 
    type, public, bind(c) :: uint16
-      integer(int16) :: u16   !0から32767までは同一、-32768から-1の値の場合は+65536する  
+      integer(c_int16_t) :: u16   !0から32767までは同一、-32768から-1の値の場合は+65536する  
    end type uint16
 
    public :: operator(+)
@@ -95,22 +96,23 @@ contains
       type(uint16) :: res
 
       if ((UINT16_LIMIT+1)/2 < a) then
-         res%u16 = a - (UINT16_LIMIT+1)
+         res%u16 = int(a - (UINT16_LIMIT+1), c_int16_t)
       else
-         res%u16 = a
+         res%u16 = int(a, c_int16_t)
       end if
    end function
 
 
    function unsign_int64 (a) result(res)
+      use, intrinsic :: iso_c_binding
       implicit none
       integer(int64), intent(in) :: a
       type(uint16) :: res
 
       if ((UINT16_LIMIT+1)/2 < a) then
-         res%u16 = a - (UINT16_LIMIT+1)
+         res%u16 = int(a - (UINT16_LIMIT+1), c_int16_t)
       else
-         res%u16 = a
+         res%u16 = int(a, c_int16_t)
       end if
    end function
    
@@ -210,11 +212,12 @@ contains
    ! Addition
 
    function uint16_add_uint16 (ua, ub) result(res)
+      use, intrinsic :: iso_c_binding
       implicit none
       type(uint16), intent(in) :: ua, ub
       type(uint16) :: res
 
-      res%u16 = validate(ua) + validate(ub)
+      res%u16 = int(validate(ua) + validate(ub), c_int16_t)
 
    end function uint16_add_uint16
       
@@ -375,7 +378,7 @@ contains
       type(uint16), intent(in) :: ua, ub
       type(uint16) :: res
       
-      res%u16 = validate(ua) * validate(ub)
+      res%u16 = int(validate(ua) * validate(ub), c_int16_t)
 
    end function uint16_mul_uint16
 

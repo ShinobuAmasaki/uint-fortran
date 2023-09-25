@@ -1,5 +1,6 @@
 module unsigned_int32
    use, intrinsic :: iso_fortran_env
+   use, intrinsic :: iso_c_binding
    implicit none
    
    private
@@ -7,7 +8,7 @@ module unsigned_int32
    integer(int64), parameter :: UINT32_LIMIT = 4294967295_int64
 
    type, public, bind(c) :: uint32
-      integer(int32) :: u32
+      integer(c_int32_t) :: u32
    end type uint32
 
    public :: operator(+)
@@ -158,14 +159,15 @@ contains
    
    
    function unsign_int64(a) result(res)
+      use, intrinsic :: iso_c_binding
       implicit none
       integer(int64), intent(in) :: a
       type(uint32) :: res
 
       if ((UINT32_LIMIT+1)/2 < a) then
-         res%u32 = a - (UINT32_LIMIT+1)
+         res%u32 = int(a - (UINT32_LIMIT+1), c_int)
       else
-         res%u32 = a
+         res%u32 = int(a, c_int)
       end if
    end function unsign_int64
 
@@ -377,11 +379,12 @@ contains
    ! Multiplication
 
    function uint32_mul_uint32(ua, ub) result(res)
-      use, intrinsic :: iso_fortran_env
+      use, intrinsic :: iso_c_binding
+
       implicit none
       type(uint32), intent(in) :: ua, ub
       type(uint32) :: res
-      res%u32 = validate(ua)*validate(ub)
+      res%u32 = int(validate(ua)*validate(ub), c_int)
 
    end function uint32_mul_uint32
 
