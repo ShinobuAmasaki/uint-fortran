@@ -42,12 +42,53 @@ module unsigned_int16
       module procedure :: uint16_div_uint16
    end interface 
 
-   ! public :: operator(<)
-   ! public :: operator(>)
-   ! public :: operator(<=)
-   ! public :: operator(>=)
-   ! public :: operator(/=)
-   ! public :: operator(==)
+   public :: operator(<)
+   interface operator(<)
+      module procedure :: uint16_lt_uint16
+      module procedure :: uint16_lt_int16, int16_lt_uint16
+      module procedure :: uint16_lt_int32, int32_lt_uint16
+      module procedure :: uint16_lt_int64, int64_lt_uint16
+   end interface
+   
+   public :: operator(>)
+   interface operator(>)
+      module procedure :: uint16_gt_uint16
+      module procedure :: uint16_gt_int16, int16_gt_uint16 
+      module procedure :: uint16_gt_int32, int32_gt_uint16
+      module procedure :: uint16_gt_int64, int64_gt_uint16  
+   end interface
+   
+   public :: operator(<=)
+   interface operator(<=)
+      module procedure :: uint16_le_uint16
+      module procedure :: uint16_le_int16, int16_le_uint16
+      module procedure :: uint16_le_int32, int32_le_uint16
+      module procedure :: uint16_le_int64, int64_le_uint16
+   end interface
+   
+   public :: operator(>=)
+   interface operator(>=)
+      module procedure :: uint16_ge_uint16
+      module procedure :: uint16_ge_int16, int16_ge_uint16
+      module procedure :: uint16_ge_int32, int32_ge_uint16
+      module procedure :: uint16_ge_int64, int64_ge_uint16
+   end interface
+
+   public :: operator(/=)
+   interface operator(/=)
+      module procedure :: uint16_ne_uint16
+      module procedure :: uint16_ne_int16, int16_ne_uint16
+      module procedure :: uint16_ne_int32, int32_ne_uint16
+      module procedure :: uint16_ne_int64, int64_ne_uint16
+   end interface
+   
+   public :: operator(==)
+   interface operator(==)
+      module procedure :: uint16_eq_uint16
+      module procedure :: uint16_eq_int16, int16_eq_uint16
+      module procedure :: uint16_eq_int32, int32_eq_uint16
+      module procedure :: uint16_eq_int64, int64_eq_uint16
+   end interface
 
    public:: assignment(=)
    interface assignment(=)
@@ -521,6 +562,414 @@ contains
 
       res = validate(ua) / a  
    end function  
+
+   !==================================================================!
+   ! Comparison
+
+   ! greater than
+   function uint16_gt_uint16 (ua, ub) result(res)
+      implicit none
+      type(uint16), intent(in) :: ua, ub
+      logical :: res
+      res = validate(ua) > validate(ub)
+   end function uint16_gt_uint16
+
+   function uint16_gt_int16 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int16), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) > b
+   end function uint16_gt_int16
+
+   function int16_gt_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int16), intent(in) :: a
+      type(uint16), intent(in) :: ub 
+      logical :: res
+      
+      res = a > validate(ub)
+   end function int16_gt_uint16
+
+   function uint16_gt_int32(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) > b
+   end function uint16_gt_int32
+
+   function int32_gt_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int32), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a > validate(ub)
+   end function int32_gt_uint16
+
+   function uint16_gt_int64(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      logical :: res
+      
+      res = validate(ua) > b
+   end function uint16_gt_int64
+
+   function int64_gt_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int64), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a > validate(ub)
+   end function int64_gt_uint16
+
+   
+   ! greater or equal than
+   function uint16_ge_uint16 (ua, ub) result(res)
+      implicit none
+      type(uint16), intent(in) :: ua, ub
+      logical :: res
+      res = validate(ua) >= validate(ub)
+   end function uint16_ge_uint16
+
+   function uint16_ge_int16 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int16), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) >= b
+   end function uint16_ge_int16
+
+   function int16_ge_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int16), intent(in) :: a
+      type(uint16), intent(in) :: ub 
+      logical :: res
+      
+      res = a >= validate(ub)
+   end function int16_ge_uint16
+
+   function uint16_ge_int32(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) >= b
+   end function uint16_ge_int32
+
+   function int32_ge_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int32), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a >= validate(ub)
+   end function int32_ge_uint16
+
+   function uint16_ge_int64(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      logical :: res
+      
+      res = validate(ua) >= b
+   end function uint16_ge_int64
+
+   function int64_ge_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int64), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a >= validate(ub)
+   end function int64_ge_uint16
+
+
+    ! less than
+   function uint16_lt_uint16 (ua, ub) result(res)
+      implicit none
+      type(uint16), intent(in) :: ua, ub
+      logical :: res
+      res = validate(ua) < validate(ub)
+   end function uint16_lt_uint16
+
+   function uint16_lt_int16 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int16), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) < b
+   end function uint16_lt_int16
+
+   function int16_lt_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int16), intent(in) :: a
+      type(uint16), intent(in) :: ub 
+      logical :: res
+      
+      res = a < validate(ub)
+   end function int16_lt_uint16
+
+   function uint16_lt_int32(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) < b
+   end function uint16_lt_int32
+
+   function int32_lt_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int32), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a < validate(ub)
+   end function int32_lt_uint16
+
+   function uint16_lt_int64(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      logical :: res
+      
+      res = validate(ua) < b
+   end function uint16_lt_int64
+
+   function int64_lt_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int64), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a < validate(ub)
+   end function int64_lt_uint16
+
+
+   ! less or equal than
+   function uint16_le_uint16 (ua, ub) result(res)
+      implicit none
+      type(uint16), intent(in) :: ua, ub
+      logical :: res
+      res = validate(ua) <= validate(ub)
+   end function uint16_le_uint16
+
+   function uint16_le_int16 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int16), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) <= b
+   end function uint16_le_int16
+
+   function int16_le_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int16), intent(in) :: a
+      type(uint16), intent(in) :: ub 
+      logical :: res
+      
+      res = a <= validate(ub)
+   end function int16_le_uint16
+
+   function uint16_le_int32(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) <= b
+   end function uint16_le_int32
+
+   function int32_le_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int32), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a <= validate(ub)
+   end function int32_le_uint16
+
+   function uint16_le_int64(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      logical :: res
+      
+      res = validate(ua) <= b
+   end function uint16_le_int64
+
+   function int64_le_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int64), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a <= validate(ub)
+   end function int64_le_uint16
+
+
+    ! equal to
+   function uint16_eq_uint16 (ua, ub) result(res)
+      implicit none
+      type(uint16), intent(in) :: ua, ub
+      logical :: res
+      res = validate(ua) == validate(ub)
+   end function uint16_eq_uint16
+
+   function uint16_eq_int16 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int16), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) == b
+   end function uint16_eq_int16
+
+   function int16_eq_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int16), intent(in) :: a
+      type(uint16), intent(in) :: ub 
+      logical :: res
+      
+      res = a == validate(ub)
+   end function int16_eq_uint16
+
+   function uint16_eq_int32(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) == b
+   end function uint16_eq_int32
+
+   function int32_eq_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int32), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a == validate(ub)
+   end function int32_eq_uint16
+
+   function uint16_eq_int64(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      logical :: res
+      
+      res = validate(ua) == b
+   end function uint16_eq_int64
+
+   function int64_eq_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int64), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a == validate(ub)
+   end function int64_eq_uint16
+
+
+    ! not equal to
+   function uint16_ne_uint16 (ua, ub) result(res)
+      implicit none
+      type(uint16), intent(in) :: ua, ub
+      logical :: res
+      res = validate(ua) /= validate(ub)
+   end function uint16_ne_uint16
+
+   function uint16_ne_int16 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int16), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) /= b
+   end function uint16_ne_int16
+
+   function int16_ne_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int16), intent(in) :: a
+      type(uint16), intent(in) :: ub 
+      logical :: res
+      
+      res = a /= validate(ub)
+   end function int16_ne_uint16
+
+   function uint16_ne_int32(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res
+
+      res = validate(ua) /= b
+   end function uint16_ne_int32
+
+   function int32_ne_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int32), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a /= validate(ub)
+   end function int32_ne_uint16
+
+   function uint16_ne_int64(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      type(uint16), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      logical :: res
+      
+      res = validate(ua) /= b
+   end function uint16_ne_int64
+
+   function int64_ne_uint16(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      integer(int64), intent(in) :: a
+      type(uint16), intent(in) :: ub
+      logical :: res
+
+      res = a /= validate(ub)
+   end function int64_ne_uint16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end module unsigned_int16
 
