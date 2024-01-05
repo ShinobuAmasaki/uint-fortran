@@ -105,7 +105,7 @@ contains
       character(*), intent(inout) :: iomessage
 
       if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
-         write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) pick(self)
+         write(unit=unit, fmt='(i10)', iostat=iostatus, iomsg=iomessage) pick(self)
          return
       else
          if (iotype(3:) /= "u32" .or. iotype(3:) /= "U32") then
@@ -146,8 +146,8 @@ contains
       integer,       intent(  out) :: iostatus
       character(*),  intent(inout) :: iomessage
 
-      if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
-         write(unit=unit, fmt= *, iostat=iostatus, iomsg=iomessage) pick(self)
+      if (iotype == "LISTDIRECTED".or. size(arglist) < 1) then
+         write(unit=unit, fmt= '(i6)', iostat=iostatus, iomsg=iomessage) pick(self)
          return
       else
          if (iotype(3:) /= "uint16") then
