@@ -4,6 +4,7 @@ module uint_io
 
    public :: write(formatted)
    interface write(formatted)
+      module procedure :: print_uint8
       module procedure :: print_uint16
       module procedure :: write_uint32_formatted
    end interface
@@ -166,5 +167,34 @@ contains
 
    end subroutine print_uint16
    
+   subroutine print_uint8 (self, unit, iotype, arglist, iostatus, iomessage)
+      use :: unsigned_int8
+      implicit none
+      type(uint8), intent(in   ) :: self
+      integer,       intent(in   ) :: unit
+      character(*),  intent(in   ) :: iotype
+      integer,       intent(in   ) :: arglist(:)
+      integer,       intent(  out) :: iostatus
+      character(*),  intent(inout) :: iomessage
+
+      if (iotype == "LISTDIRECTED".or. size(arglist) < 1) then
+         write(unit=unit, fmt= '(i3)', iostat=iostatus, iomsg=iomessage) pick(self)
+         return
+      else
+         if (iotype(3:) /= "uint8") then
+            print *, "Error: type mismatch"
+            return
+         end if
+
+         block
+            character(2) :: width_total, width_decimal
+            character(6) :: uint_spec
+            character(:), allocatable :: fmt
+            
+            write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) pick(self)
+         end block
+      end if
+
+   end subroutine print_uint8
 
 end module uint_io
