@@ -5,13 +5,13 @@ module uint_io_m
    use :: assignment_m
 
    private
-
+   
    public :: write(formatted)
    interface write(formatted)
-      module procedure :: print_uint8, print_uint16
+      module procedure :: print_uint8
+      module procedure :: print_uint16
       module procedure :: write_uint32_formatted
    end interface
-
 
    public :: write(unformatted)
    interface write(unformatted)

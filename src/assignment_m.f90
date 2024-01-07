@@ -8,6 +8,11 @@ module assignment_m
    
    public :: assignment(=)
    interface assignment(=)
+      module procedure :: to_int32_assign_uint8
+      module procedure :: to_int32_assign_uint16
+      module procedure :: to_int64_assign_uint32 
+
+
       module procedure :: to_uint8_assign_int8
       module procedure :: to_uint8_assign_int16
       module procedure :: to_uint8_assign_int32
@@ -24,6 +29,33 @@ module assignment_m
    end interface
 
 contains
+
+   subroutine to_int32_assign_uint8(a, ub)
+      implicit none
+      type(uint8), intent(in) :: ub
+      integer(int32), intent(out) :: a
+
+      a = int(cast_to_int16(ub), kind=int32)
+   end subroutine to_int32_assign_uint8
+
+   subroutine to_int32_assign_uint16(a, ub)
+      implicit none
+      type(uint16), intent(in) :: ub
+      integer(int32), intent(out) :: a
+
+      a = cast_to_int32(ub)
+   end subroutine to_int32_assign_uint16
+      
+
+   subroutine to_int64_assign_uint32(a, ub)
+      implicit none
+      type(uint32), intent(in) :: ub
+      integer(int64), intent(out) :: a
+
+      a = cast_to_int64(ub)
+   end subroutine to_int64_assign_uint32
+      
+
 
    function to_uint8_unsign_int8(a) result(res)
       implicit none
