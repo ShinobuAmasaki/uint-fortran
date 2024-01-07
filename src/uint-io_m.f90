@@ -1,11 +1,14 @@
-module uint_io
-   use unsigned_int16
-   use unsigned_int32
+module uint_io_m
+   use :: uint8_t
+   use :: uint16_t 
+   use :: uint32_t
+   use :: assignment_m
+
+   private
 
    public :: write(formatted)
    interface write(formatted)
-      module procedure :: print_uint8
-      module procedure :: print_uint16
+      module procedure :: print_uint8, print_uint16
       module procedure :: write_uint32_formatted
    end interface
 
@@ -106,7 +109,7 @@ contains
       character(*), intent(inout) :: iomessage
 
       if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
-         write(unit=unit, fmt='(i10)', iostat=iostatus, iomsg=iomessage) pick(self)
+         write(unit=unit, fmt='(i10)', iostat=iostatus, iomsg=iomessage) cast_to_int64(self)
          return
       else
          if (iotype(3:) /= "u32" .or. iotype(3:) /= "U32") then
@@ -129,16 +132,13 @@ contains
 
             fmt = "'("//spec//")'"
 
-            write(unit=unit, fmt=fmt, iostat=iostatus, iomsg=iomessage) pick(self)
+            write(unit=unit, fmt=fmt, iostat=iostatus, iomsg=iomessage) cast_to_int64(self)
          end block
       end if
    end subroutine write_uint32_formatted
 
 
-
-   ! Writing
    subroutine print_uint16 (self, unit, iotype, arglist, iostatus, iomessage)
-      use :: unsigned_int16
       implicit none
       type(uint16), intent(in   ) :: self
       integer,       intent(in   ) :: unit
@@ -148,7 +148,7 @@ contains
       character(*),  intent(inout) :: iomessage
 
       if (iotype == "LISTDIRECTED".or. size(arglist) < 1) then
-         write(unit=unit, fmt= '(i6)', iostat=iostatus, iomsg=iomessage) pick(self)
+         write(unit=unit, fmt= '(i6)', iostat=iostatus, iomsg=iomessage) cast_to_int32(self)
          return
       else
          if (iotype(3:) /= "uint16") then
@@ -161,24 +161,24 @@ contains
             character(6) :: uint_spec
             character(:), allocatable :: fmt
             
-            write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) pick(self)
+            write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) cast_to_int32(self)
          end block
       end if
 
    end subroutine print_uint16
+
    
    subroutine print_uint8 (self, unit, iotype, arglist, iostatus, iomessage)
-      use :: unsigned_int8
       implicit none
       type(uint8), intent(in   ) :: self
       integer,       intent(in   ) :: unit
       character(*),  intent(in   ) :: iotype
       integer,       intent(in   ) :: arglist(:)
       integer,       intent(  out) :: iostatus
-      character(*),  intent(inout) :: iomessage
+      character(*),  intent(inout) :: iomessage 
 
       if (iotype == "LISTDIRECTED".or. size(arglist) < 1) then
-         write(unit=unit, fmt= '(i3)', iostat=iostatus, iomsg=iomessage) pick(self)
+         write(unit=unit, fmt= '(i3)', iostat=iostatus, iomsg=iomessage) cast_to_int16(self)
          return
       else
          if (iotype(3:) /= "uint8") then
@@ -191,10 +191,12 @@ contains
             character(6) :: uint_spec
             character(:), allocatable :: fmt
             
-            write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) pick(self)
+            write(unit=unit, fmt=*, iostat=iostatus, iomsg=iomessage) cast_to_int16(self)
          end block
       end if
 
    end subroutine print_uint8
 
-end module uint_io
+ 
+
+end module uint_io_m

@@ -1,6 +1,7 @@
 module uint_swap
-   use :: unsigned_int32
-   use :: unsigned_int16
+   use :: uint8_t
+   use :: uint16_t 
+   use :: uint32_t
    private
 
    public :: swap16
@@ -12,6 +13,8 @@ module uint_swap
    interface swap32
       module procedure :: swap_uint32
    end interface swap32
+
+   public :: bits_invert
 
 contains
 
@@ -39,5 +42,22 @@ contains
       res%u32 = ior(res%u32, ishft(ua%u32, -24))
 
    end function swap_uint32
+
+   pure function bits_invert(ua) result(res)
+      use :: iso_fortran_env
+      implicit none
+      type(uint8), intent(in) :: ua
+      type(uint8) :: res
+      integer(int32) :: x
+
+      x = ua%u8
+
+      x = ior(ishft(iand(x, 15),4), iand(ishft(x,-4), 15))
+      x = ior(ishft(iand(x, 51), 2), iand(ishft(x,-2), 51))
+      x = ior(ishft(iand(x, 85), 1), iand(ishft(x,-1), 85)) 
+      
+      res = uint8(x)
+
+   end function bits_invert
 
 end module uint_swap
