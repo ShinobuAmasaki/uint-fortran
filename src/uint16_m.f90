@@ -12,5 +12,6 @@ module uint16_m
    use :: equivalence_m,  only: operator(==), operator(/=)
 
    use :: mod_m, only: mod
+   use :: int_m, only: int2, int4
 
 end module uint16_m
