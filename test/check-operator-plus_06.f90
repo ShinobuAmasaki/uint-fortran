@@ -1,4 +1,4 @@
-! This program tests the addition operator for uint16 + uint16. 
+! This program tests the addition operator for int8 + uint8. 
 program check
    use :: iso_fortran_env
    use :: unsigned_m
@@ -7,7 +7,8 @@ program check
    character(32) :: ustr, str
 
    integer :: count
-   type(uint16) :: ua, ub, uans
+   type(uint8) :: ub
+   integer(int32) :: uans
    integer(int32) :: a, b, ix,i, ans
    real :: x
    integer :: n = 10000000
@@ -20,20 +21,20 @@ program check
    count = 0
    do i = 1, n
       call random_number(x)
-      ix = int(x*65335)
+      ix = int(x*UINT8_LIMIT)
       a = ix
-      ua = ix 
+
 
       call random_number(x)
-      ix = int(x*65335)
+      ix = int(x*UINT8_LIMIT)
       b = ix
       ub = ix
 
       ans = a + b
-      uans = ua+ub
+      uans = a + ub
       
       
-      if (ans >65535 .or. ans < 0) cycle
+      if (ans >UINT8_LIMIT .or. ans < 0) cycle
 
       write(ustr, *) uans
       write(str,*) ans
@@ -45,7 +46,7 @@ program check
       count = count + 1
    end do
 
-   if (isPassed) print *, "[Test] uint16 + uint16: Passed, ", count, " cases."
+   if (isPassed) print *, "[Test]   int8 +  uint8: Passed, ", count, " cases."
 
    
 end program check

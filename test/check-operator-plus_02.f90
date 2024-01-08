@@ -1,3 +1,4 @@
+! This program tests the addition operator for uint16 + int16. 
 program check
    use :: iso_fortran_env
    use :: unsigned_m

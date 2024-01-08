@@ -1,3 +1,4 @@
+! This program tests the multiplication operator for uint16 * uint16. 
 program check
    use :: iso_fortran_env
    use :: unsigned_m
