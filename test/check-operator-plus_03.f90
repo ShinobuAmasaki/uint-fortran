@@ -1,7 +1,7 @@
 
 program check
    use :: iso_fortran_env
-   use :: unsigned
+   use :: unsigned_m
    implicit none
 
    character(32) :: ustr, str
@@ -46,7 +46,7 @@ program check
       count = count + 1
    end do
 
-   if (isPassed) print *, "[Test]  int16 + uint16 : Passed, ", count, " cases."
+   if (isPassed) print *, "[Test]  int16 + uint16: Passed, ", count, " cases."
 
    
 end program check

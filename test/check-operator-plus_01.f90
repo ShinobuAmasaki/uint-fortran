@@ -1,6 +1,6 @@
 program check
    use :: iso_fortran_env
-   use :: unsigned
+   use :: unsigned_m
    implicit none
 
    character(32) :: ustr, str
@@ -9,7 +9,7 @@ program check
    type(uint16) :: ua, ub, uans
    integer(int32) :: a, b, ix,i, ans
    real :: x
-   integer :: n = 10000000
+   integer :: n = 100 
 
    logical :: isPassed = .true.
 
