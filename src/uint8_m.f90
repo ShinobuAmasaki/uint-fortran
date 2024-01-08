@@ -13,7 +13,4 @@ module uint8_m
 
    use :: mod_m, only: mod
 
-
-   use :: uint_io_m
-
 end module uint8_m

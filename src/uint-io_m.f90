@@ -5,28 +5,31 @@ module uint_io_m
    use :: assignment_m
 
    private
-   
+
+
    public :: write(formatted)
+   public :: write(unformatted)
+   public :: read(formatted)
+   public :: read(unformatted)
+
    interface write(formatted)
       module procedure :: print_uint8
-      module procedure :: print_uint16
+      module procedure :: write_uint16_formatted
       module procedure :: write_uint32_formatted
    end interface
 
-   public :: write(unformatted)
    interface write(unformatted)
       module procedure :: write_uint32_unformatted
    end interface
 
-   public :: read(formatted)
    interface read(formatted)
       module procedure :: read_uint32_formatted
    end interface
    
-   public :: read(unformatted)
    interface read(unformatted)
       module procedure :: read_uint32_unformatted
    end interface
+
 
 contains
 
@@ -138,7 +141,7 @@ contains
    end subroutine write_uint32_formatted
 
 
-   subroutine print_uint16 (self, unit, iotype, arglist, iostatus, iomessage)
+   subroutine write_uint16_formatted (self, unit, iotype, arglist, iostatus, iomessage)
       implicit none
       type(uint16), intent(in   ) :: self
       integer,       intent(in   ) :: unit
@@ -165,7 +168,7 @@ contains
          end block
       end if
 
-   end subroutine print_uint16
+   end subroutine write_uint16_formatted
 
    
    subroutine print_uint8 (self, unit, iotype, arglist, iostatus, iomessage)
@@ -176,6 +179,7 @@ contains
       integer,       intent(in   ) :: arglist(:)
       integer,       intent(  out) :: iostatus
       character(*),  intent(inout) :: iomessage 
+
 
       if (iotype == "LISTDIRECTED".or. size(arglist) < 1) then
          write(unit=unit, fmt= '(i3)', iostat=iostatus, iomsg=iomessage) cast_to_int16(self)

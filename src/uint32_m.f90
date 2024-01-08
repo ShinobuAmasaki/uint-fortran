@@ -12,8 +12,6 @@ module uint32_m
    use :: equivalence_m,  only: operator(==), operator(/=)
 
    use :: mod_m, only: mod
-
-
-   use :: uint_io_m
+   use :: int_m, only: int2, int4
 
 end module uint32_m
