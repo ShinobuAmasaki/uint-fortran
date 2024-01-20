@@ -28,6 +28,7 @@ Currently not available for LLVM 'Classic' Flang.
 
 ### `use` statement 
 To use the `uint-fortran` package, start by including the `unsigned_m` module in your Fortran program.
+(The previous module name of `unsigned` has been changed to `unsigned_m`.)
 
 ```fortran
 use unsigned_m
