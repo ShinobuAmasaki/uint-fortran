@@ -46,7 +46,7 @@ program check
       count = count + 1
    end do
 
-   if (isPassed) print *, "[Test] uint32 + uint8: Passed, ", count, " cases."
+   if (isPassed) print *, "[Test] uint32 +  uint8: Passed, ", count, " cases."
 
    
 end program check
