@@ -27,10 +27,10 @@ Currently not available for LLVM 'Classic' Flang.
 ## Usage
 
 ### `use` statement 
-To use the `uint-fortran` package, start by including the `unsigned` module in your Fortran program.
+To use the `uint-fortran` package, start by including the `unsigned_m` module in your Fortran program.
 
 ```fortran
-use unsigned
+use unsigned_m
 ```
 
 Make sure not to use the `only:` clause with this module to ensure proper operator overrides.
@@ -235,3 +235,11 @@ Internally, it simply contains a signed integer with the same 32-bit length.
 To enable proper handling of `uint32` as an unsigned integer in Fortran, operator
 overload for assginment, arithmetic operations, comparison operations,
 and exponentiation, as well as derived type I/O feature, are utilized.
+
+## Forbid assignment of negative numbers
+
+By setting `-DHARDENED' to the environment variable FPM_FFLAGS and building,
+you can stop the program with `error stop` when a negative number is assigned.
+
+This functionaity is implemented using preprocessor macros in `assignment_m.f90`.
+The same thing can be done by specifying `--flag "-DHARDENED` in the fpm command option. 
