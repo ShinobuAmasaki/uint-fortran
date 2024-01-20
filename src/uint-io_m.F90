@@ -6,7 +6,6 @@ module uint_io_m
 
    private
 
-
    public :: write(formatted)
    public :: write(unformatted)
    public :: read(formatted)
