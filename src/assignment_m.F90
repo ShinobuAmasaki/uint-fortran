@@ -106,37 +106,6 @@ contains
       end if
    end function to_uint8_unsign_int64
 
-   subroutine to_uint8_assign_int8(ua, a)
-      implicit none
-      type(uint8), intent(out) :: ua
-      integer(int8), intent(in) :: a
-
-      ua = to_uint8_unsign_int8(a)
-   end subroutine to_uint8_assign_int8
-
-   subroutine to_uint8_assign_int16(ua, a)
-      implicit none
-      type(uint8), intent(out) :: ua
-      integer(int16), intent(in) :: a
-      
-      ua = to_uint8_unsign_int16(a)
-   end subroutine to_uint8_assign_int16
-
-   subroutine to_uint8_assign_int32(ua, a)
-      implicit none
-      type(uint8), intent(out) :: ua
-      integer(int32), intent(in) :: a
-
-      ua = to_uint8_unsign_int32(a)
-   end subroutine to_uint8_assign_int32
-
-   subroutine to_uint8_assign_int64(ua, a)
-      implicit none
-      type(uint8), intent(out) :: ua
-      integer(int64), intent(in) :: a
-
-      ua = to_uint8_unsign_int64(a)
-   end subroutine to_uint8_assign_int64
 
 !=====================================================================!
 
@@ -208,13 +177,61 @@ contains
       end if
    end function to_uint32_unsign_int64
 
+!=====================================================================!
 
+   subroutine to_uint8_assign_int8(ua, a)
+      implicit none
+      type(uint8), intent(out) :: ua
+      integer(int8), intent(in) :: a
 
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint8"
+      end if
+#endif
 
+      ua = to_uint8_unsign_int8(a)
+   end subroutine to_uint8_assign_int8
 
+   subroutine to_uint8_assign_int16(ua, a)
+      implicit none
+      type(uint8), intent(out) :: ua
+      integer(int16), intent(in) :: a
 
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint8"
+      end if
+#endif
+      
+      ua = to_uint8_unsign_int16(a)
+   end subroutine to_uint8_assign_int16
 
+   subroutine to_uint8_assign_int32(ua, a)
+      implicit none
+      type(uint8), intent(out) :: ua
+      integer(int32), intent(in) :: a
 
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint8"
+      end if
+#endif
+
+      ua = to_uint8_unsign_int32(a)
+   end subroutine to_uint8_assign_int32
+
+   subroutine to_uint8_assign_int64(ua, a)
+      implicit none
+      type(uint8), intent(out) :: ua
+      integer(int64), intent(in) :: a
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint8"
+      end if
+#endif
+      ua = to_uint8_unsign_int64(a)
+   end subroutine to_uint8_assign_int64
 
 
    subroutine to_uint16_assign_int16 (ua, a)
@@ -223,6 +240,11 @@ contains
       type(uint16), intent(out) :: ua
       integer(int16), intent(in) :: a
 
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint16"
+      end if
+#endif
       ua = to_uint16_unsign_int16(a)
 
    end subroutine to_uint16_assign_int16
@@ -234,6 +256,11 @@ contains
       type(uint16), intent(out) :: ua
       integer(int32), intent(in) :: a
 
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint16"
+      end if
+#endif
       ua = to_uint16_unsign_int32(a)
 
    end subroutine to_uint16_assign_int32
@@ -244,6 +271,12 @@ contains
       implicit none
       type(uint16), intent(out) :: ua
       integer(int64), intent(in) :: a
+
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint16"
+      end if
+#endif
 
       ua = to_uint16_unsign_int64(a)
 
@@ -256,6 +289,11 @@ contains
       type(uint32), intent(out) :: ua
       integer(int16), intent(in) :: a
 
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint32"
+      end if
+#endif
       ua = to_uint32_unsign_int16(a)
 
    end subroutine to_uint32_assign_int16
@@ -267,11 +305,13 @@ contains
       type(uint32), intent(out) :: ua
       integer(int32), intent(in) :: a
 
-      ua = to_uint32_unsign_int32(a)
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint32"
+      end if
+#endif
 
-      ! if (a < 0) then
-      !    error stop
-      ! end if
+      ua = to_uint32_unsign_int32(a)
 
    end subroutine to_uint32_assign_int32
 
@@ -281,6 +321,12 @@ contains
       implicit none
       type(uint32), intent(out) :: ua
       integer(int64), intent(in) :: a
+
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint32"
+      end if
+#endif
 
       ua = to_uint32_unsign_int64(a)
 
