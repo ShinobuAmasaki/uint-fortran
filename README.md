@@ -19,8 +19,10 @@ uint-fortran = {git ="https://github.com/ShinobuAmasaki/uint-fortran"}
 
 Supported compilers are below:
 - GNU Fortran Compiler (`gfortran`, tested on v12.3.1)
-- Intel oneAPI Fortran Compier Classic (`ifort`, tested on `ifort (IFORT) 2021.9.0 20230302`)
-- Intel oneAPI Fortran Compier (`ifx`, tested on `ifx (IFX) 2023.1.0 20230320`)
+- Intel oneAPI Fortran Compier Classic (`ifort`, tested on `ifort (IFORT) 2021.11.0 20231010`)
+- Intel oneAPI Fortran Compier (`ifx`, tested on `ifx (IFX) 2024.0.0 20231017`)
+
+Currently not available for LLVM 'Classic' Flang. 
 
 ## Usage
 
