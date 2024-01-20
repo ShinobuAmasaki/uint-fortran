@@ -239,7 +239,7 @@ and exponentiation, as well as derived type I/O feature, are utilized.
 
 ## Forbid assignment of negative numbers
 
-By setting `-DHARDENED' to the environment variable FPM_FFLAGS and building,
+By setting `-DHARDENED` to the environment variable FPM_FFLAGS and building,
 you can stop the program with `error stop` when a negative number is assigned.
 
 This functionaity is implemented using preprocessor macros in `assignment_m.f90`.
