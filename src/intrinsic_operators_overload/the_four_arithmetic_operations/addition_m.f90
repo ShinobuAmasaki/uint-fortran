@@ -9,6 +9,10 @@ module addition_m
 
    public :: operator(+)
    interface operator(+)
+      module procedure :: uint8_add_uint16, uint16_add_uint8
+      module procedure :: uint8_add_uint32, uint32_add_uint8
+      module procedure :: uint16_add_uint32, uint32_add_uint16
+
       module procedure :: uint8_add_int8, int8_add_uint8
       module procedure :: uint8_add_int16, int16_add_uint8
       module procedure :: uint8_add_int32, int32_add_uint8
@@ -27,8 +31,67 @@ module addition_m
    
 contains
 
-   !==================================================================!
-   ! Addition
+   function uint8_add_uint16 (ua, ub) result(res)
+      implicit none
+      type(uint8), intent(in) :: ua
+      type(uint16), intent(in) :: ub
+      type(uint16) :: res
+
+      res = int16_add_uint16(cast_to_int16(ua), ub)
+   end function uint8_add_uint16
+
+
+   function uint16_add_uint8 (ua, ub) result(res)
+      implicit none
+      type(uint16), intent(in) :: ua
+      type(uint8), intent(in) :: ub
+      type(uint16) :: res 
+
+      res = uint16_add_int16(ua, cast_to_int16(ub))
+   end function uint16_add_uint8
+
+   function uint8_add_uint32 (ua, ub) result(res)
+      implicit none
+      type(uint8), intent(in) :: ua
+      type(uint32), intent(in) :: ub
+      type(uint32) :: res
+
+      res = int32_add_uint32(int(cast_to_int16(ua), kind=int32), ub)
+
+   end function uint8_add_uint32
+
+   function uint32_add_uint8 (ua, ub) result(res)
+      implicit none
+      type(uint32), intent(in) :: ua
+      type(uint8), intent(in) :: ub 
+      type(uint32) :: res 
+
+      res = uint32_add_int32(ua, int(cast_to_int16(ub), kind=int32))
+
+   end function uint32_add_uint8
+
+   function uint16_add_uint32 (ua, ub) result(res)
+      implicit none
+      type(uint16), intent(in) :: ua
+      type(uint32), intent(in) :: ub
+      type(uint32) :: res
+
+      res = int32_add_uint32(cast_to_int32(ua), ub)
+
+   end function uint16_add_uint32
+
+   function uint32_add_uint16 (ua, ub) result(res)
+      implicit none
+      type(uint32), intent(in) :: ua
+      type(uint16), intent(in) :: ub
+      type(uint32) :: res
+
+      res = uint32_add_int32(ua, cast_to_int32(ub))
+
+   end function uint32_add_uint16
+
+
+!-- uint8 ------------------------------------------------------------!
 
    function uint8_add_uint8 (ua, ub) result(res)
       use :: iso_c_binding
@@ -111,7 +174,7 @@ contains
       res = cast_to_int16(ua) + b
    end function uint8_add_int64
 
-
+!-- uint16 ------------------------------------------------------------!
 
    function uint16_add_uint16 (ua, ub) result(res)
       use, intrinsic :: iso_c_binding
@@ -194,6 +257,7 @@ contains
 
    end function
 
+!-- uint32 ------------------------------------------------------------!
 
    function uint32_add_uint32 (ua, ub) result(res)
       implicit none
