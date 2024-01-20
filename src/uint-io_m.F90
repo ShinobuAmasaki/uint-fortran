@@ -18,6 +18,8 @@ module uint_io_m
    end interface
 
    interface write(unformatted)
+      module procedure :: write_uint8_unformatted
+      module procedure :: write_uint16_unformatted
       module procedure :: write_uint32_unformatted
    end interface
 
@@ -26,6 +28,8 @@ module uint_io_m
    end interface
    
    interface read(unformatted)
+      module procedure :: read_uint8_unformatted
+      module procedure :: read_uint16_unformatted
       module procedure :: read_uint32_unformatted
    end interface
 
@@ -33,7 +37,50 @@ module uint_io_m
 contains
 
    !=====================================================================!
-   ! Derived type I/O
+   ! Derived type I/O Unformatted
+
+   subroutine read_uint8_unformatted(self, unit, iostatus, iomessage)
+      implicit none
+      type(uint8), intent(inout) :: self
+      integer,       intent(in) :: unit
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+
+      read(unit=unit, iostat=iostatus, iomsg=iomessage) self%u8
+   end subroutine read_uint8_unformatted
+
+
+   subroutine write_uint8_unformatted(self, unit, iostatus, iomessage)
+      implicit none
+      type(uint8), intent(in) :: self
+      integer,       intent(in) :: unit
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+
+      write(unit=unit, iostat=iostatus, iomsg=iomessage) self%u8
+   end subroutine write_uint8_unformatted
+   
+   subroutine read_uint16_unformatted(self, unit, iostatus, iomessage)
+      implicit none
+      type(uint16), intent(inout) :: self
+      integer,       intent(in) :: unit
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+
+      read(unit=unit, iostat=iostatus, iomsg=iomessage) self%u16
+   end subroutine read_uint16_unformatted
+
+
+   subroutine write_uint16_unformatted(self, unit, iostatus, iomessage)
+      implicit none
+      type(uint16), intent(in) :: self
+      integer,       intent(in) :: unit
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+
+      write(unit=unit, iostat=iostatus, iomsg=iomessage) self%u16
+   end subroutine write_uint16_unformatted
+
 
    subroutine read_uint32_unformatted(self, unit, iostatus, iomessage)
       implicit none
@@ -56,6 +103,8 @@ contains
       write(unit=unit, iostat=iostatus, iomsg=iomessage) self%u32
    end subroutine write_uint32_unformatted
 
+   !=====================================================================!
+   ! Derived type I/O Formatted
 
    subroutine read_uint32_formatted (self, unit, iotype, arglist, iostatus, iomessage)
       use, intrinsic :: iso_fortran_env
