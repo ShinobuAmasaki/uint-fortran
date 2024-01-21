@@ -3,6 +3,7 @@ module addition_m
    use :: uint8_t
    use :: uint16_t 
    use :: uint32_t
+   use :: uint64_t
    use :: assignment_m
    implicit none
    private
@@ -27,6 +28,10 @@ module addition_m
       module procedure :: uint32_add_uint32
       module procedure :: uint32_add_int32, int32_add_uint32
       module procedure :: uint32_add_int64, int64_add_uint32
+
+      module procedure :: uint64_add_uint64
+      module procedure :: uint64_add_int32, int32_add_uint64
+      module procedure :: uint64_add_int64, int64_add_uint64
    end interface 
    
 contains
@@ -308,4 +313,55 @@ contains
       integer(int64) :: res
       res = a + cast_to_int64(ub)
    end function int64_add_uint32
+
+!-- uint64 -----------------------------------------------------------!
+
+   function uint64_add_uint64(ua,ub) result(res)
+      implicit none
+      type(uint64), intent(in) :: ua, ub
+      type(uint64) :: res
+
+      res = ua%u64 + ub%u64
+   end function uint64_add_uint64
+
+   function uint64_add_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint64), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      type(uint64) :: res
+
+      res = ua%u64 + b
+   end function 
+
+   function int32_add_uint64 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int32), intent(in) :: a
+      type(uint64), intent(in) :: ub
+      type(uint64) :: res
+
+      res = a + ub%u64
+   end function
+
+   function uint64_add_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint64), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      type(uint64) :: res
+
+      res = ua%u64 + b
+   end function 
+
+   function int64_add_uint64 (a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int64), intent(in) :: a
+      type(uint64), intent(in) :: ub
+      type(uint64) :: res
+
+      res = a + ub%u64
+   end function 
+
 end module addition_m

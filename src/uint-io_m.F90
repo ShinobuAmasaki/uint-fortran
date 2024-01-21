@@ -2,6 +2,7 @@ module uint_io_m
    use :: uint8_t
    use :: uint16_t 
    use :: uint32_t
+   use :: uint64_t
    use :: assignment_m
 
    private
@@ -15,12 +16,14 @@ module uint_io_m
       module procedure :: print_uint8
       module procedure :: write_uint16_formatted
       module procedure :: write_uint32_formatted
+      module procedure :: write_uint64_formatted
    end interface
 
    interface write(unformatted)
       module procedure :: write_uint8_unformatted
       module procedure :: write_uint16_unformatted
       module procedure :: write_uint32_unformatted
+      module procedure :: write_uint64_unformatted
    end interface
 
    interface read(formatted)
@@ -31,6 +34,7 @@ module uint_io_m
       module procedure :: read_uint8_unformatted
       module procedure :: read_uint16_unformatted
       module procedure :: read_uint32_unformatted
+      module procedure :: read_uint64_unformatted
    end interface
 
 
@@ -102,6 +106,27 @@ contains
 
       write(unit=unit, iostat=iostatus, iomsg=iomessage) self%u32
    end subroutine write_uint32_unformatted
+
+   subroutine read_uint64_unformatted(self, unit, iostatus, iomessage)
+      implicit none
+      type(uint64), intent(inout) :: self
+      integer,       intent(in) :: unit
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+
+      read(unit=unit, iostat=iostatus, iomsg=iomessage) self%u64
+   end subroutine read_uint64_unformatted
+
+
+   subroutine write_uint64_unformatted(self, unit, iostatus, iomessage)
+      implicit none
+      type(uint64), intent(in) :: self
+      integer,       intent(in) :: unit
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+
+      write(unit=unit, iostat=iostatus, iomsg=iomessage) self%u64
+   end subroutine write_uint64_unformatted
 
    !=====================================================================!
    ! Derived type I/O Formatted
@@ -249,6 +274,46 @@ contains
 
    end subroutine print_uint8
 
+
+   subroutine write_uint64_formatted (self, unit, iotype, arglist, iostatus, iomessage)
+      use :: iso_fortran_env
+      implicit none
+      type(uint64), intent(in) :: self
+      integer,       intent(in) :: unit
+      character(*),  intent(in) :: iotype
+      integer,       intent(in) :: arglist(:)
+      integer,       intent(out) :: iostatus
+      character(*), intent(inout) :: iomessage
+
+      integer(int64) :: upper, lower, diff, diff_u, diff_l
+      integer(int64), parameter :: separator = 10_8**9
+
+      if (self%u64 > 0) then
+         if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
+            write(unit=unit, fmt='(i20)', iostat=iostatus, iomsg=iomessage) self%u64
+            return
+         end if
+      else
+         diff = (self%u64 - INT64_LOWER_LIMIT)
+         diff_u = diff/separator 
+         diff_l = mod(diff, separator)
+
+         upper = INT64_UPPER_LIMIT/separator + diff_u
+         lower = mod(INT64_UPPER_LIMIT, separator) + diff_l + 1
+
+         if (lower > separator) then
+            upper = upper + 1 
+            lower = lower - separator
+         end if
+
+         if (iotype == "LISTDIRECTED" .or. size(arglist) < 1) then
+            write(unit=unit, fmt='(i11,i9.9)', iostat=iostatus, iomsg=iomessage) upper, lower
+            return
+         end if
+
+      end if
+
+   end subroutine write_uint64_formatted
  
 
 end module uint_io_m

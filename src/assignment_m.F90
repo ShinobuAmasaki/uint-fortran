@@ -3,6 +3,7 @@ module assignment_m
    use :: uint8_t
    use :: uint16_t
    use :: uint32_t
+   use :: uint64_t
    implicit none
    private
    
@@ -25,7 +26,9 @@ module assignment_m
       module procedure :: to_uint32_assign_int16
       module procedure :: to_uint32_assign_int32
       module procedure :: to_uint32_assign_int64
-      
+
+      module procedure :: to_uint64_assign_int32
+      module procedure :: to_uint64_assign_int64
    end interface
 
 contains
@@ -176,6 +179,24 @@ contains
          res%u32 = int(a, c_int)
       end if
    end function to_uint32_unsign_int64
+
+   function to_uint64_unsign_int32(a) result(res)
+      use, intrinsic :: iso_c_binding
+      implicit none
+      integer(int32), intent(in) :: a
+      type(uint64) :: res
+
+      res%u64 = int(a, kind=int64)
+   end function to_uint64_unsign_int32
+
+   function to_uint64_unsign_int64(a) result(res)
+      use, intrinsic :: iso_c_binding
+      implicit none
+      integer(int64), intent(in) :: a
+      type(uint64) :: res
+
+      res%u64 = a
+   end function to_uint64_unsign_int64
 
 !=====================================================================!
 
@@ -331,5 +352,34 @@ contains
       ua = to_uint32_unsign_int64(a)
 
    end subroutine to_uint32_assign_int64
+
+   subroutine to_uint64_assign_int32(ua, a)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint64), intent(out) :: ua
+      integer(int32), intent(in) :: a
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint32"
+      end if
+#endif
+
+      ua = to_uint64_unsign_int32(a)
+   end subroutine to_uint64_assign_int32
+
+   subroutine to_uint64_assign_int64(ua, a)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint64), intent(out) :: ua
+      integer(int64), intent(in) :: a
+#ifdef HARDENED
+      if (a < 0) then
+         error stop "Assigning a negative number to an unsigned integer: uint32"
+      end if
+#endif
+
+      ua = to_uint64_unsign_int64(a)
+   end subroutine to_uint64_assign_int64
+
 
 end module assignment_m
