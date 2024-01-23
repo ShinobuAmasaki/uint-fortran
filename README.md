@@ -255,7 +255,7 @@ The currently implemented features are:
 - Assignment operator overload,
 - Comparison operators overloads,
 - Arithmetic operator overloads for addition and subtraction,
-- Write statement (unformatted and formatted, formatted is asterisk only).
+- `write` statement (unformatted and formatted, formatted is asterisk only).
 
 Since `integer(int128)`, which includes the entire `type(uint64)`, is not available,
 no type conversions are yet provided.
