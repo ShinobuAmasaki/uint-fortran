@@ -5,7 +5,7 @@
 In Fortran, handling unsigned integers that are interoperable with C can be a bit troublesome,
 as Fortran natively does not contain unsigned integer types.
 
-However, with the `uint-fortran` package, you can work with unsigned integer seemlessly.
+However, with the `uint-fortran` package, you can work with unsigned integer seamlessly.
 
 Let's break down how to use this package and demonstrate its interoperability with C functions.
 
@@ -19,8 +19,8 @@ uint-fortran = {git ="https://github.com/ShinobuAmasaki/uint-fortran"}
 
 Supported compilers are below:
 - GNU Fortran Compiler (`gfortran`, tested on v12.3.1)
-- Intel oneAPI Fortran Compier Classic (`ifort`, tested on `ifort (IFORT) 2021.11.0 20231010`)
-- Intel oneAPI Fortran Compier (`ifx`, tested on `ifx (IFX) 2024.0.0 20231017`)
+- Intel oneAPI Fortran Compiler Classic (`ifort`, tested on `ifort (IFORT) 2021.11.0 20231010`)
+- Intel oneAPI Fortran Compiler (`ifx`, tested on `ifx (IFX) 2024.0.0 20231017`)
 
 Currently not available for LLVM 'Classic' Flang. 
 
@@ -242,7 +242,7 @@ and exponentiation, as well as derived type I/O feature, are utilized.
 By setting `-DHARDENED` to the environment variable FPM_FFLAGS and building,
 you can stop the program with `error stop` when a negative number is assigned.
 
-This functionaity is implemented using preprocessor macros in `assignment_m.f90`.
+This functionality is implemented using preprocessor macros in `assignment_m.f90`.
 The same thing can be done by specifying `--flag "-DHARDENED` in the fpm command option. 
 
 ## `uint64`
