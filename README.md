@@ -242,8 +242,8 @@ and exponentiation, as well as derived type I/O feature, are utilized.
 By setting `-DHARDENED` to the environment variable FPM_FFLAGS and building,
 you can stop the program with `error stop` when a negative number is assigned.
 
-This functionality is implemented using preprocessor macros in `assignment_m.f90`.
-The same thing can be done by specifying `--flag "-DHARDENED` in the fpm command option. 
+This functionality is implemented using preprocessor macros in `assignment_m.F90`.
+The same thing can be done by specifying `--flag "-DHARDENED"` in the fpm command option. 
 
 ## `uint64`
 
