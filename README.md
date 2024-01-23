@@ -223,11 +223,11 @@ end program main
 
 ## Internal Structure
 
-The `uint32` derived type is declared within the `unsigned_int32` module as follows:
+The `uint32` derived type is declared within the `uint32_t` module as follows:
 
 ```fortran
    type, public, bind(c) :: uint32
-      integer(int32) :: u32
+      integer(c_int32_t) :: u32
    end type uint32
 ```
 
@@ -244,3 +244,23 @@ you can stop the program with `error stop` when a negative number is assigned.
 
 This functionaity is implemented using preprocessor macros in `assignment_m.f90`.
 The same thing can be done by specifying `--flag "-DHARDENED` in the fpm command option. 
+
+## `uint64`
+
+`uint64` as 8-byte unsigned integer type has been implemented with partial feature support. 
+
+The currently implemented features are:
+
+- `type(uint64)`,
+- Assignment operator overload,
+- Comparison operators overloads,
+- Arithmetic operator overloads for addition and subtraction,
+- Write statement (unformatted and formatted, formatted is asterisk only).
+
+Since `integer(int128)`, which includes the entire `type(uint64)`, is not available,
+no type conversions are yet provided.
+Therefore, arithmetic operations involving `type(uint64)` return `type(uint64)`.
+
+Please note that in the GNU Fortran, basically writing a numerical literal exceeding 
+9223372036854775807 (that is maximum value of a 64-bit signed integer) will result in a compile time error.
+If you want to ignore this, consider using the `-fno-range-check` compile option. 
