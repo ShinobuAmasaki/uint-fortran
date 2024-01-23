@@ -31,7 +31,8 @@ module less_than_m
    
 contains
    
-   ! less than
+!== less than ========================================================!
+!-- uint16 -----------------------------------------------------------!
    function uint16_lt_uint16 (ua, ub) result(res)
       implicit none
       type(uint16), intent(in) :: ua, ub
@@ -93,8 +94,60 @@ contains
       res = a < cast_to_int32(ub)
    end function int64_lt_uint16
 
+!-- uint32 -----------------------------------------------------------!
 
-   ! less or equal than
+   function uint32_lt_uint32 (ua, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua, ub
+      logical :: res  
+      res = cast_to_int64(ua) < cast_to_int64(ub)
+   end function 
+
+
+   function uint32_lt_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res
+      res = cast_to_int64(ua) < b 
+   end function uint32_lt_int32
+
+
+   function uint32_lt_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int64), intent(in) :: b 
+      logical :: res
+      res = cast_to_int64(ua) < b
+   end function uint32_lt_int64
+
+
+   function int32_lt_uint32(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ub 
+      integer(int32), intent(in) :: a
+      logical :: res 
+      res = a < cast_to_int64(ub)
+   end function int32_lt_uint32
+
+
+   function int64_lt_uint32(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint32), intent(in) :: ub
+      integer(int64), intent(in) :: a
+      logical :: res 
+      res = a < cast_to_int64(ub)
+   end function int64_lt_uint32
+
+
+!== less then or equal ===============================================!
+!-- uint16 -----------------------------------------------------------!
+   
    function uint16_le_uint16 (ua, ub) result(res)
       implicit none
       type(uint16), intent(in) :: ua, ub
@@ -156,59 +209,8 @@ contains
       res = a <= cast_to_int32(ub)
    end function int64_le_uint16
 
-   !----------------------------------------------------!
-   ! less than
-   function uint32_lt_uint32 (ua, ub) result(res)
-      use, intrinsic :: iso_fortran_env
-      implicit none
-      type(uint32), intent(in) :: ua, ub
-      logical :: res  
-      res = cast_to_int64(ua) < cast_to_int64(ub)
-   end function 
+!-- uint32 -----------------------------------------------------------!
 
-
-   function uint32_lt_int32 (ua, b) result(res)
-      use, intrinsic :: iso_fortran_env
-      implicit none
-      type(uint32), intent(in) :: ua
-      integer(int32), intent(in) :: b
-      logical :: res
-      res = cast_to_int64(ua) < b 
-   end function uint32_lt_int32
-
-
-   function uint32_lt_int64 (ua, b) result(res)
-      use, intrinsic :: iso_fortran_env
-      implicit none
-      type(uint32), intent(in) :: ua
-      integer(int64), intent(in) :: b 
-      logical :: res
-      res = cast_to_int64(ua) < b
-   end function uint32_lt_int64
-
-
-   function int32_lt_uint32(a, ub) result(res)
-      use, intrinsic :: iso_fortran_env
-      implicit none
-      type(uint32), intent(in) :: ub 
-      integer(int32), intent(in) :: a
-      logical :: res 
-      res = a < cast_to_int64(ub)
-   end function int32_lt_uint32
-
-
-   function int64_lt_uint32(a, ub) result(res)
-      use, intrinsic :: iso_fortran_env
-      implicit none
-      type(uint32), intent(in) :: ub
-      integer(int64), intent(in) :: a
-      logical :: res 
-      res = a < cast_to_int64(ub)
-   end function int64_lt_uint32
-
-
-   !----------------------------------------------------!
-   ! less or equal than
    function uint32_le_uint32 (ua, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
