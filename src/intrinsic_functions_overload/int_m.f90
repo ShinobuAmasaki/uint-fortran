@@ -19,6 +19,11 @@ module int_m
       module procedure :: uint32_cast_to_int32
    end interface
 
+   public :: int
+   interface int
+      module procedure :: uint32_cast_to_int64
+   end interface int
+
 contains
 
    function uint8_cast_to_int16(ua) result(res)
@@ -69,6 +74,14 @@ contains
 
       res = int(cast_to_int64(ua), kind=int32)
    end function uint32_cast_to_int32
+
+   function uint32_cast_to_int64(ua) result(res)
+      implicit none
+      type(uint32), intent(in) :: ua
+      integer(int64) :: res
+
+      res = int(cast_to_int64(ua), kind=int64)
+   end function uint32_cast_to_int64
 
 end module int_m
    
