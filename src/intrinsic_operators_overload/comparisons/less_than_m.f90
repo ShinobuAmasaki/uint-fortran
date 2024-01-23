@@ -15,6 +15,10 @@ module less_than_m
       module procedure :: uint32_lt_uint32
       module procedure :: uint32_lt_int32, int32_lt_uint32
       module procedure :: uint32_lt_int64, int64_lt_uint32
+
+      module procedure :: uint64_lt_uint64
+      module procedure :: uint64_lt_int32, int32_lt_uint64
+      module procedure :: uint64_lt_int64, int64_lt_uint64
    end interface
 
    !---------------------------------------------------------!      
