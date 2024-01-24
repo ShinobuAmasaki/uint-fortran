@@ -6,6 +6,9 @@ module uint64_m
    ! No other arithmetic operators will be provided. 
 
    use :: equivalence_m, only: operator(==), operator(/=)
+   use :: greater_than_m, only: operator(>), operator(>=)
+   use :: less_than_m, only: operator(<), operator(<=) 
+   use :: dble_m, only: dble
 
 
 end module uint64_m

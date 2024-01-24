@@ -26,7 +26,7 @@ module int_m
 
 contains
 
-  pure  function uint8_cast_to_int16(ua) result(res)
+   pure elemental function uint8_cast_to_int16(ua) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int16) :: res
