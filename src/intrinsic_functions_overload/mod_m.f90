@@ -13,7 +13,7 @@ module mod_m
          
 contains
 
-   function uint32_mod_uint32(ua, ub) result(res)
+   pure elemental function uint32_mod_uint32(ua, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua, ub
@@ -23,7 +23,7 @@ contains
    end function uint32_mod_uint32
 
 
-   function uint32_mod_int32 (ua, b) result(res)
+   pure elemental function uint32_mod_int32 (ua, b) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -34,7 +34,7 @@ contains
    end function 
 
    
-   function int32_mod_uint32 (a, ub) result(res)
+   pure elemental function int32_mod_uint32 (a, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int32), intent(in) :: a
@@ -45,7 +45,7 @@ contains
    end function int32_mod_uint32
    
 
-   function uint32_mod_int64 (ua, b) result(res)
+   pure elemental function uint32_mod_int64 (ua, b) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -55,7 +55,7 @@ contains
    end function uint32_mod_int64
 
    
-   function int64_mod_uint32 (a, ub) result(res)
+   pure elemental function int64_mod_uint32 (a, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int64), intent(in) :: a

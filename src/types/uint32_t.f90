@@ -18,7 +18,7 @@ module uint32_t
 
 contains
 
-   function validate(ua)
+   pure elemental function  validate(ua)
       implicit none
       type(uint32), intent(in) :: ua
       integer(int64) :: validate
@@ -32,7 +32,7 @@ contains
    !==================================================================!
    ! Casting
 
-   integer(int64) function cast_to_int64(ua)
+   pure integer(int64) function cast_to_int64(ua)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -42,7 +42,7 @@ contains
    end function cast_to_int64
 
 
-   real(real64) function cast_to_dble(ua)
+   pure real(real64) function cast_to_dble(ua)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -51,7 +51,7 @@ contains
    end function cast_to_dble
 
 
-   real(real32) function cast_to_real(ua)
+   pure real(real32) function cast_to_real(ua)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -59,7 +59,7 @@ contains
    end function cast_to_real
 
 
-   function cast_to_complex_64_re(ua, im) result(res)
+   pure elemental function  cast_to_complex_64_re(ua, im) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -68,7 +68,7 @@ contains
       res = cmplx(validate(ua), im, kind(0d0))
    end function cast_to_complex_64_re
 
-   function cast_to_complex_64_im(re, ua) result(res)
+   pure elemental function  cast_to_complex_64_im(re, ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua

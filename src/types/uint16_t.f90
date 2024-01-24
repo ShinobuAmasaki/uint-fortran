@@ -17,7 +17,7 @@ module uint16_t
 
 contains
 
-   function validate(ua)
+   pure elemental function  validate(ua)
       implicit none
       type(uint16), intent(in) :: ua
       integer(int32) :: validate
@@ -31,7 +31,7 @@ contains
 
    ! Casting
 
-   function cast_to_int32(ua) result(res)
+   pure elemental function  cast_to_int32(ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint16), intent(in) :: ua
@@ -40,7 +40,7 @@ contains
       res = validate(ua)
    end function cast_to_int32
 
-   function cast_to_dble(ua) result(res)
+   pure elemental function  cast_to_dble(ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint16), intent(in) :: ua
@@ -51,7 +51,7 @@ contains
    end function cast_to_dble
 
    
-   function cast_to_real(ua) result(res)
+   pure elemental function  cast_to_real(ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint16), intent(in) :: ua
@@ -62,7 +62,7 @@ contains
    end function cast_to_real
 
 
-   function cast_to_complex_64 (ua) result(res)
+   pure elemental function  cast_to_complex_64 (ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint16), intent(in) :: ua

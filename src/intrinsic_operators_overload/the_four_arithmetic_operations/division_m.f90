@@ -19,7 +19,7 @@ module division_m
 
 
 contains
- function uint16_div_uint16 (ua, ub) result(res)
+   pure elemental function uint16_div_uint16 (ua, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint16), intent(in) :: ua, ub
@@ -28,7 +28,7 @@ contains
       res = cast_to_int32(ua) / cast_to_int32(ub)
    end function
 
-   function int16_div_uint16 (a, ua) result(res)
+   pure elemental function int16_div_uint16 (a, ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int16), intent(in) :: a
@@ -39,7 +39,7 @@ contains
    end function
 
 
-   function uint16_div_int16 (ua, a) result(res)
+   pure elemental function uint16_div_int16 (ua, a) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int16), intent(in) :: a
@@ -50,7 +50,7 @@ contains
    end function
 
 
-   function uint16_div_int32 (ua, a) result(res)
+   pure elemental function uint16_div_int32 (ua, a) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int32), intent(in) :: a
@@ -60,7 +60,7 @@ contains
       res = cast_to_int32(ua) / a
    end function
 
-   function int32_div_uint16 (a, ua) result(res)
+   pure elemental function int32_div_uint16 (a, ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int32), intent(in) :: a
@@ -71,7 +71,7 @@ contains
    end function   
  
    
-   function int64_div_uint16(a, ua) result(res)
+   pure elemental function int64_div_uint16(a, ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int64), intent(in) :: a
@@ -82,7 +82,7 @@ contains
    end function
 
 
-   function uint16_div_int64 (ua, a) result(res)
+   pure elemental function uint16_div_int64 (ua, a) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int64), intent(in) :: a
@@ -92,7 +92,7 @@ contains
       res = cast_to_int32(ua) / a  
    end function
 
-   function uint32_div_uint32(ua, ub) result(res)
+   pure elemental function uint32_div_uint32(ua, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua, ub
@@ -102,7 +102,7 @@ contains
    end function uint32_div_uint32
 
 
-   function uint32_div_int32 (ua, b) result(res)
+   pure elemental function uint32_div_int32 (ua, b) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -113,7 +113,7 @@ contains
    end function 
 
    
-   function int32_div_uint32 (a, ub) result(res)
+   pure elemental function int32_div_uint32 (a, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int32), intent(in) :: a
@@ -124,7 +124,7 @@ contains
    end function int32_div_uint32
    
 
-   function uint32_div_int64 (ua, b) result(res)
+   pure elemental function uint32_div_int64 (ua, b) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -134,7 +134,7 @@ contains
    end function uint32_div_int64
 
    
-   function int64_div_uint32 (a, ub) result(res)
+   pure elemental function int64_div_uint32 (a, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int64), intent(in) :: a

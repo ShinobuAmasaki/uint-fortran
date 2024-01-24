@@ -40,7 +40,7 @@ contains
 
 !-- uint8 ------------------------------------------------------------!
 
-   function uint8_sub_uint8 (ua, ub) result(res)
+   pure elemental function uint8_sub_uint8 (ua, ub) result(res)
       use :: iso_c_binding
       implicit none
       type(uint8), intent(in) :: ua, ub
@@ -49,7 +49,7 @@ contains
       res%u8 = int(cast_to_int16(ua) - cast_to_int16(ub), c_int8_t)
    end function uint8_sub_uint8
 
-   function int8_sub_uint8(a, ub) result(res)
+   pure elemental function int8_sub_uint8(a, ub) result(res)
       implicit none
       integer(int8), intent(in) :: a
       type(uint8), intent(in) :: ub
@@ -58,7 +58,7 @@ contains
       res = a - cast_to_int16(ub)
    end function int8_sub_uint8
 
-   function uint8_sub_int8(ua, b) result(res)
+   pure elemental function uint8_sub_int8(ua, b) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int8), intent(in) :: b
@@ -67,7 +67,7 @@ contains
       res = cast_to_int16(ua) - b
    end function uint8_sub_int8
 
-   function int16_sub_uint8(a, ub) result(res)
+   pure elemental function int16_sub_uint8(a, ub) result(res)
       implicit none
       integer(int16), intent(in) :: a
       type(uint8), intent(in) :: ub
@@ -76,7 +76,7 @@ contains
       res = a - cast_to_int16(ub)
    end function int16_sub_uint8
 
-   function uint8_sub_int16(ua, b) result(res)
+   pure elemental function uint8_sub_int16(ua, b) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int16), intent(in) :: b
@@ -85,7 +85,7 @@ contains
       res = cast_to_int16(ua) - b
    end function uint8_sub_int16
 
-   function int32_sub_uint8(a, ub) result(res)
+   pure elemental function int32_sub_uint8(a, ub) result(res)
       implicit none
       integer(int32), intent(in) :: a
       type(uint8), intent(in) :: ub
@@ -94,7 +94,7 @@ contains
       res = a - cast_to_int16(ub)
    end function int32_sub_uint8
 
-   function uint8_sub_int32(ua, b) result(res)
+   pure elemental function uint8_sub_int32(ua, b) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int32), intent(in) :: b
@@ -103,7 +103,7 @@ contains
       res = cast_to_int16(ua) - b
    end function uint8_sub_int32
 
-   function int64_sub_uint8(a, ub) result(res)
+   pure elemental function int64_sub_uint8(a, ub) result(res)
       implicit none
       integer(int64), intent(in) :: a
       type(uint8), intent(in) :: ub
@@ -112,7 +112,7 @@ contains
       res = a - cast_to_int16(ub)
    end function int64_sub_uint8
 
-   function uint8_sub_int64(ua, b) result(res)
+   pure elemental function uint8_sub_int64(ua, b) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int64), intent(in) :: b
@@ -133,7 +133,7 @@ contains
       res = cast_to_int32(ua) - cast_to_int32(ub)
    end function uint16_sub_uint16
 
-   function int16_sub_uint16 (a, ua) result(res)
+   pure elemental function int16_sub_uint16 (a, ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int16), intent(in) :: a
@@ -144,7 +144,7 @@ contains
    end function
 
 
-   function uint16_sub_int16 (ua, a) result(res)
+   pure elemental function uint16_sub_int16 (ua, a) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int16), intent(in) :: a
@@ -155,7 +155,7 @@ contains
    end function
 
 
-   function uint16_sub_int32 (ua, a) result(res)
+   pure elemental function uint16_sub_int32 (ua, a) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int32), intent(in) :: a
@@ -165,7 +165,7 @@ contains
       res = cast_to_int32(ua) - a
    end function
 
-   function int32_sub_uint16 (a, ua) result(res)
+   pure elemental function int32_sub_uint16 (a, ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int32), intent(in) :: a
@@ -176,7 +176,7 @@ contains
    end function   
  
    
-   function int64_sub_uint16(a, ua) result(res)
+   pure elemental function int64_sub_uint16(a, ua) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int64), intent(in) :: a
@@ -187,7 +187,7 @@ contains
    end function
 
 
-   function uint16_sub_int64 (ua, a) result(res)
+   pure elemental function uint16_sub_int64 (ua, a) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int64), intent(in) :: a
@@ -199,7 +199,7 @@ contains
 
 !-- uint32 -----------------------------------------------------------!
 
-   function uint32_sub_uint32(ua, ub) result(res)
+   pure elemental function uint32_sub_uint32(ua, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua, ub
@@ -209,7 +209,7 @@ contains
    end function uint32_sub_uint32
 
 
-   function uint32_sub_int32 (ua, b) result(res)
+   pure elemental function uint32_sub_int32 (ua, b) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -220,7 +220,7 @@ contains
    end function 
 
    
-   function int32_sub_uint32 (a, ub) result(res)
+   pure elemental function int32_sub_uint32 (a, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int32), intent(in) :: a
@@ -231,7 +231,7 @@ contains
    end function int32_sub_uint32
    
 
-   function uint32_sub_int64 (ua, b) result(res)
+   pure elemental function uint32_sub_int64 (ua, b) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint32), intent(in) :: ua
@@ -241,7 +241,7 @@ contains
    end function uint32_sub_int64
 
    
-   function int64_sub_uint32 (a, ub) result(res)
+   pure elemental function int64_sub_uint32 (a, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int64), intent(in) :: a
@@ -252,7 +252,7 @@ contains
 
 !-- uint64 -----------------------------------------------------------!
 
-   function uint64_sub_uint64(ua,ub) result(res)
+   pure elemental function uint64_sub_uint64(ua,ub) result(res)
       implicit none
       type(uint64), intent(in) :: ua, ub
       type(uint64) :: res
@@ -260,7 +260,7 @@ contains
       res = ua%u64 - ub%u64
    end function uint64_sub_uint64
 
-   function uint64_sub_int32 (ua, b) result(res)
+   pure elemental function uint64_sub_int32 (ua, b) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint64), intent(in) :: ua
@@ -270,7 +270,7 @@ contains
       res = ua%u64 - b
    end function 
 
-   function int32_sub_uint64 (a, ub) result(res)
+   pure elemental function int32_sub_uint64 (a, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int32), intent(in) :: a
@@ -280,7 +280,7 @@ contains
       res = a - ub%u64
    end function
 
-   function uint64_sub_int64 (ua, b) result(res)
+   pure elemental function uint64_sub_int64 (ua, b) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       type(uint64), intent(in) :: ua
@@ -290,7 +290,7 @@ contains
       res = ua%u64 - b
    end function 
 
-   function int64_sub_uint64 (a, ub) result(res)
+   pure elemental function int64_sub_uint64 (a, ub) result(res)
       use, intrinsic :: iso_fortran_env
       implicit none
       integer(int64), intent(in) :: a

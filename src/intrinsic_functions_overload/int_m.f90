@@ -26,7 +26,7 @@ module int_m
 
 contains
 
-   function uint8_cast_to_int16(ua) result(res)
+  pure  function uint8_cast_to_int16(ua) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int16) :: res
@@ -34,7 +34,7 @@ contains
       res = int(cast_to_int16(ua), kind=int16)
    end function uint8_cast_to_int16
 
-   function uint16_cast_to_int16(ua) result(res)
+   pure elemental function uint16_cast_to_int16(ua) result(res)
       implicit none
       type(uint16), intent(in) :: ua
       integer(int16) :: res
@@ -42,7 +42,7 @@ contains
       res = int(cast_to_int32(ua), kind=int16)
    end function uint16_cast_to_int16
 
-   function uint32_cast_to_int16(ua) result(res)
+   pure elemental function uint32_cast_to_int16(ua) result(res)
       implicit none
       type(uint32), intent(in) :: ua
       integer(int16) :: res
@@ -51,7 +51,7 @@ contains
    end function uint32_cast_to_int16
 
 
-   function uint8_cast_to_int32(ua) result(res)
+   pure elemental function uint8_cast_to_int32(ua) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int32) :: res
@@ -59,7 +59,7 @@ contains
       res = int(cast_to_int16(ua), kind=int32)
    end function uint8_cast_to_int32
 
-   function uint16_cast_to_int32(ua) result(res)
+   pure elemental function uint16_cast_to_int32(ua) result(res)
       implicit none
       type(uint16), intent(in) :: ua
       integer(int32) :: res
@@ -67,7 +67,7 @@ contains
       res = int(cast_to_int32(ua), kind=int32)
    end function uint16_cast_to_int32
 
-   function uint32_cast_to_int32(ua) result(res)
+   pure elemental function uint32_cast_to_int32(ua) result(res)
       implicit none
       type(uint32), intent(in) :: ua
       integer(int32) :: res
@@ -75,7 +75,7 @@ contains
       res = int(cast_to_int64(ua), kind=int32)
    end function uint32_cast_to_int32
 
-   function uint32_cast_to_int64(ua) result(res)
+   pure elemental function uint32_cast_to_int64(ua) result(res)
       implicit none
       type(uint32), intent(in) :: ua
       integer(int64) :: res

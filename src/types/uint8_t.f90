@@ -20,7 +20,7 @@ module uint8_t
 contains
 
       
-   function validate(ua) result(res)
+   pure elemental function validate(ua) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int16) :: res
@@ -30,7 +30,7 @@ contains
    end function validate
 
    ! Casting
-   function cast_to_int16(ua) result(res)
+   pure elemental function cast_to_int16(ua) result(res)
       implicit none
       type(uint8), intent(in) :: ua
       integer(int16) :: res

@@ -19,7 +19,7 @@ module uint_swap
 contains
 
    ! Byte swapping for uint16
-   function swap_uint16(ua) result(res)
+   pure elemental function swap_uint16(ua) result(res)
       implicit none
       type(uint16), intent(in) :: ua
       type(uint16) :: res
@@ -30,7 +30,7 @@ contains
    end function swap_uint16
 
    ! Byte swapping for uint32
-   function swap_uint32(ua) result(res)
+   pure elemental function swap_uint32(ua) result(res)
       implicit none 
       type(uint32), intent(in) :: ua
       type(uint32) :: res
@@ -43,7 +43,7 @@ contains
 
    end function swap_uint32
 
-   pure function bits_invert(ua) result(res)
+   pure elemental function bits_invert(ua) result(res)
       use :: iso_fortran_env
       implicit none
       type(uint8), intent(in) :: ua
