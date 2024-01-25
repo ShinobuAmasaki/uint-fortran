@@ -4,7 +4,7 @@ module uint8_m
 
    use :: addition_m,       only: operator(+)
    use :: subtraction_m,    only: operator(-)
-   ! use :: multiplication_m, only: operator(*)
+   use :: multiplication_m, only: operator(*)
    ! use :: division_m,       only: operator( / )
 
    use :: greater_than_m, only: operator(>),  operator(>=)
