@@ -18,7 +18,7 @@ uint-fortran = {git ="https://github.com/ShinobuAmasaki/uint-fortran"}
 ```
 
 Supported compilers are below:
-- GNU Fortran Compiler (`gfortran`, tested on v12.3.1)
+- GNU Fortran Compiler (`gfortran`, tested on v13.2.1)
 - Intel oneAPI Fortran Compiler Classic (`ifort`, tested on `ifort (IFORT) 2021.11.0 20231010`)
 - Intel oneAPI Fortran Compiler (`ifx`, tested on `ifx (IFX) 2024.0.0 20231017`)
 
@@ -90,12 +90,12 @@ void unsigned_val_print(unsigned int val )
 
 To call this C function from Fortran, you need to create an interface block as follows.
 ```fortran
-use, intrinsic :: iso_c_binding
+use :: unsigned_m 
 interface
    subroutine unsigned_val_print(val) bind(c)
-      import c_int
+      import uint32
       implicit none
-      integer(c_int), intent(in), value :: val
+      type(uint32), intent(in), value :: val
    end subroutine unsigned_val_print
 end interface
 ```
@@ -110,7 +110,7 @@ type(uint32) :: a
 
 a = 4294967295_8  ! An example value that is maximum value of unsigned int
 
-call unsigned_val_print(a%u32)
+call unsigned_val_print(a)
 ```
 Running this code will display the result, which in this case would be `4294967295`
 
@@ -124,15 +124,15 @@ print *, a 　　! This will display the same value, 4294967295
 Here's the complete Fortran program for the example:
 ```fortran
 program main
-   use unsigned_int32
+   use unsigned_m 
    use, intrinsic :: iso_c_binding
    implicit none
    
    interface
       subroutine unsigned_val_print(val) bind(c)
-         import c_int, c_int64_t
+         import uint32
          implicit none
-         integer(c_int), intent(in), value :: val
+         type(uint32), intent(in), value :: val
       end subroutine unsigned_val_print
    end interface
 
@@ -141,7 +141,7 @@ program main
       
       a = 4294967295_8
 
-      call unsigned_val_print(a%u32)
+      call unsigned_val_print(a)
 
       print *, a    ! This will display the same value 4294967295 to standard output.
    end block
@@ -200,7 +200,7 @@ Here's the complete Fortran code used this example:
 
 ```fortran
 program main
-   use unsigned
+   use unsigned_m
    implicit none 
 
    interface
