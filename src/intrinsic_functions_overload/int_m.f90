@@ -26,6 +26,8 @@ module int_m
 
 contains
 
+!-- int2 -------------------------------------------------------------!
+
    pure elemental function uint8_cast_to_int16(ua) result(res)
       implicit none
       type(uint8), intent(in) :: ua
@@ -50,6 +52,7 @@ contains
       res = int(cast_to_int64(ua), kind=int16)
    end function uint32_cast_to_int16
 
+!-- int4 -------------------------------------------------------------!
 
    pure elemental function uint8_cast_to_int32(ua) result(res)
       implicit none
@@ -74,6 +77,8 @@ contains
 
       res = int(cast_to_int64(ua), kind=int32)
    end function uint32_cast_to_int32
+
+!-- int --------------------------------------------------------------!
 
    pure elemental function uint32_cast_to_int64(ua) result(res)
       implicit none
