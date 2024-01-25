@@ -5,6 +5,8 @@ module int_m
    use :: uint32_t
    implicit none
 
+   private
+
    public :: int2
    interface int2
       module procedure :: uint8_cast_to_int16
@@ -21,6 +23,8 @@ module int_m
 
    public :: int
    interface int
+      module procedure :: uint8_cast_to_int32
+      module procedure :: uint16_cast_to_int32
       module procedure :: uint32_cast_to_int64
    end interface int
 
