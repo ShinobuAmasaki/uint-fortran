@@ -12,7 +12,6 @@ module equivalence_m
       module procedure :: uint8_eq_int16, int16_eq_uint8
       module procedure :: uint8_eq_int32, int32_eq_uint8
       module procedure :: uint8_eq_int64, int64_eq_uint8
-      
 
       module procedure :: uint16_eq_uint16
       module procedure :: uint16_eq_int16, int16_eq_uint16
