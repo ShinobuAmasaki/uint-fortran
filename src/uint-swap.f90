@@ -14,6 +14,11 @@ module uint_swap
       module procedure :: swap_uint32
    end interface swap32
 
+   ! public :: swap64
+   ! interface swap64
+   !    module procedure :: swap_uint64
+   ! end interface swap64
+
    public :: bits_invert
 
 contains

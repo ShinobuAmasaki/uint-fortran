@@ -6,6 +6,17 @@ module mod_m
 
    public :: mod
    interface mod
+      ! module procedure :: uint8_mod_uint8
+      ! module procedure :: uint8_mod_int8, int8_mod_uint8
+      ! module procedure :: uint8_mod_int16, int16_mod_uint8
+      ! module procedure :: uint8_mod_int32, int32_mod_uint8
+      ! module procedure :: uint8_mod_int64, int64_mod_uint8
+
+      ! module procedure :: uint16_mod_uint16
+      ! module procedure :: uint16_mod_int16, int16_mod_uint16
+      ! module procedure :: uint16_mod_int32, int32_mod_uint16
+      ! module procedure :: uint16_mod_int64, int64_mod_uint16
+
       module procedure :: uint32_mod_uint32
       module procedure :: uint32_mod_int32, int32_mod_uint32
       module procedure :: uint32_mod_int64, int64_mod_uint32

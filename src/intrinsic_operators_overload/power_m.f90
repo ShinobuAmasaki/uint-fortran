@@ -7,6 +7,16 @@ module power_m
 
    public :: operator(**)
    interface operator(**)
+      ! module procedure :: uint8_pow_uint8
+      ! module procedure :: uint8_pow_int16, int16_pow_uint8
+      ! module procedure :: uint8_pow_int32, int32_pow_uint8
+      ! module procedure :: uint8_pow_int64, int64_pow_uint8 
+
+      ! module procedure :: uint16_pow_uint16
+      ! module procedure :: uint16_pow_int16, int16_pow_uint16
+      ! module procedure :: uint16_pow_int32, int32_pow_uint16
+      ! module procedure :: uint16_pow_int64, int64_pow_uint16 
+
       module procedure :: uint32_pow_uint32
       module procedure :: uint32_pow_int32, int32_pow_uint32
       module procedure :: uint32_pow_int64, int64_pow_uint32
