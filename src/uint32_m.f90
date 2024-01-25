@@ -6,6 +6,7 @@ module uint32_m
    use :: subtraction_m,    only: operator(-)
    use :: multiplication_m, only: operator(*)
    use :: division_m,       only: operator( / )
+   use :: power_m,          only: operator(**)
 
    use :: greater_than_m, only: operator(>),  operator(>=)
    use :: less_than_m,    only: operator(<),  operator(<=)
