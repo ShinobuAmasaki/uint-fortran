@@ -1,4 +1,5 @@
 module less_than_m
+   use :: uint8_t
    use :: uint16_t 
    use :: uint32_t 
    use :: uint64_t
@@ -7,6 +8,12 @@ module less_than_m
 
    public :: operator(<)
    interface operator(<)
+      module procedure :: uint8_lt_uint8
+      module procedure :: uint8_lt_int8, int8_lt_uint8
+      module procedure :: uint8_lt_int16, int16_lt_uint8
+      module procedure :: uint8_lt_int32, int32_lt_uint8
+      module procedure :: uint8_lt_int64, int64_lt_uint8 
+
       module procedure :: uint16_lt_uint16
       module procedure :: uint16_lt_int16, int16_lt_uint16
       module procedure :: uint16_lt_int32, int32_lt_uint16
@@ -24,6 +31,12 @@ module less_than_m
    !---------------------------------------------------------!      
    public :: operator(<=)
    interface operator(<=)
+      module procedure :: uint8_le_uint8  
+      module procedure :: uint8_le_int8, int8_le_uint8
+      module procedure :: uint8_le_int16, int16_le_uint8
+      module procedure :: uint8_le_int32, int32_le_uint8
+      module procedure :: uint8_le_int64, int64_le_uint8 
+
       module procedure :: uint16_le_uint16
       module procedure :: uint16_le_int16, int16_le_uint16
       module procedure :: uint16_le_int32, int32_le_uint16
@@ -41,6 +54,87 @@ module less_than_m
 contains
    
 !== less than ========================================================!
+
+!-- uint8 ------------------------------------------------------------!
+   pure elemental function uint8_lt_uint8 (ua, ub) result(res)
+      implicit none
+      type(uint8), intent(in) :: ua, ub
+      logical :: res
+      res = cast_to_int16(ua) < cast_to_int16(ub)
+   end function uint8_lt_uint8
+
+   pure elemental function uint8_lt_int8(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env   
+      implicit none
+      type(uint8), intent(in) :: ua
+      integer(int8), intent(in) :: b
+      logical :: res 
+      res = cast_to_int16(ua) < b
+   end function uint8_lt_int8
+
+   pure elemental function int8_lt_uint8(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int8), intent(in) :: a 
+      type(uint8), intent(in) :: ub 
+      logical :: res
+      res = a < cast_to_int16(ub)
+   end function int8_lt_uint8
+
+   pure elemental function uint8_lt_int16(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint8), intent(in) :: ua
+      integer(int16), intent(in) :: b
+      logical :: res 
+      res = cast_to_int16(ua) < b
+   end function uint8_lt_int16
+
+   pure elemental function int16_lt_uint8(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int16), intent(in) :: a 
+      type(uint8), intent(in) :: ub 
+      logical :: res
+      res = a < cast_to_int16(ub)
+   end function int16_lt_uint8
+   
+   pure elemental function uint8_lt_int32(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint8), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res 
+      res = cast_to_int16(ua) < b
+   end function uint8_lt_int32
+
+   pure elemental function int32_lt_uint8(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int32), intent(in) :: a 
+      type(uint8), intent(in) :: ub 
+      logical :: res
+      res = a < cast_to_int16(ub)
+   end function int32_lt_uint8
+
+   pure elemental function uint8_lt_int64(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint8), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      logical :: res 
+      res = cast_to_int16(ua) < b
+   end function uint8_lt_int64
+
+   pure elemental function int64_lt_uint8(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int64), intent(in) :: a 
+      type(uint8), intent(in) :: ub 
+      logical :: res
+      res = a < cast_to_int16(ub)
+   end function int64_lt_uint8
+
 !-- uint16 -----------------------------------------------------------!
    pure elemental function uint16_lt_uint16 (ua, ub) result(res)
       implicit none
@@ -245,6 +339,86 @@ contains
 
 
 !== less then or equal ===============================================!
+!-- uint8 ------------------------------------------------------------!
+   pure elemental function uint8_le_uint8 (ua, ub) result(res)
+      implicit none
+      type(uint8), intent(in) :: ua, ub
+      logical :: res
+      res = cast_to_int16(ua) <= cast_to_int16(ub)
+   end function uint8_le_uint8
+
+   pure elemental function uint8_le_int8(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env   
+      implicit none
+      type(uint8), intent(in) :: ua
+      integer(int8), intent(in) :: b
+      logical :: res 
+      res = cast_to_int16(ua) <= b
+   end function uint8_le_int8
+
+   pure elemental function int8_le_uint8(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int8), intent(in) :: a 
+      type(uint8), intent(in) :: ub 
+      logical :: res
+      res = a <= cast_to_int16(ub)
+   end function int8_le_uint8
+
+   pure elemental function uint8_le_int16(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint8), intent(in) :: ua
+      integer(int16), intent(in) :: b
+      logical :: res 
+      res = cast_to_int16(ua) <= b
+   end function uint8_le_int16
+
+   pure elemental function int16_le_uint8(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int16), intent(in) :: a 
+      type(uint8), intent(in) :: ub 
+      logical :: res
+      res = a <= cast_to_int16(ub)
+   end function int16_le_uint8
+   
+   pure elemental function uint8_le_int32(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint8), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      logical :: res 
+      res = cast_to_int16(ua) <= b
+   end function uint8_le_int32
+
+   pure elemental function int32_le_uint8(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int32), intent(in) :: a 
+      type(uint8), intent(in) :: ub 
+      logical :: res
+      res = a <= cast_to_int16(ub)
+   end function int32_le_uint8
+
+   pure elemental function uint8_le_int64(ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint8), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      logical :: res 
+      res = cast_to_int16(ua) <= b
+   end function uint8_le_int64
+
+   pure elemental function int64_le_uint8(a, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      integer(int64), intent(in) :: a 
+      type(uint8), intent(in) :: ub 
+      logical :: res
+      res = a <= cast_to_int16(ub)
+   end function int64_le_uint8
+
 !-- uint16 -----------------------------------------------------------!
 
    pure elemental function uint16_le_uint16 (ua, ub) result(res)

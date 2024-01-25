@@ -7,8 +7,8 @@ module uint8_m
    ! use :: multiplication_m, only: operator(*)
    ! use :: division_m,       only: operator( / )
 
-   ! use :: greater_than_m, only: operator(>),  operator(>=)
-   ! use :: less_than_m,    only: operator(<),  operator(<=)
+   use :: greater_than_m, only: operator(>),  operator(>=)
+   use :: less_than_m,    only: operator(<),  operator(<=)
    use :: equivalence_m,  only: operator(==), operator(/=)
 
    use :: mod_m, only: mod
