@@ -165,7 +165,7 @@ unsigned int return_unsigned(void)
 To call this C function from Fortran, you can create a Fortran interface like this:
 
 ```fortran
-use unsigned
+use unsigned_m
 
 interface
    function return_unsigned () bind(c, name='return_unsigned') result(res)
@@ -253,7 +253,7 @@ The currently implemented features are:
 
 - `type(uint64)`,
 - Assignment operator overload,
-- Comparison operators overloads,
+- Comparison operator overloads,
 - Arithmetic operator overloads for addition and subtraction,
 - `write` statement (unformatted and formatted, formatted is asterisk only).
 
