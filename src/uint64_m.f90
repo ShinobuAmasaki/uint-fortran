@@ -11,6 +11,7 @@ module uint64_m
    
    use :: mod_m, only: mod
    use :: dble_m, only: dble
+   use :: real_m, only: real
 
 
 

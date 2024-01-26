@@ -14,5 +14,5 @@ module uint16_m
    use :: mod_m, only: mod
    use :: int_m, only: int2, int4
    use :: dble_m, only: dble
-   
+   use :: real_m, only: real
 end module uint16_m
