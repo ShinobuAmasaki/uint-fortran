@@ -244,5 +244,67 @@ contains
 
 !-- uint64 -----------------------------------------------------------!
  
+   pure elemental function uint64_mod_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint64), intent(in) :: ua
+      integer(int32), intent(in) :: b
+      type(uint64) :: res
+
+      if (ua%u64 >= 0 ) then
+         res = mod(ua%u64, b)
+      else  
+         block
+            integer(int64) :: upper, lower, diff, diff_u, diff_l
+            integer(int64), parameter :: separator = 10_8**2
+            integer(int32) :: n
+
+            n = b
+
+            diff = (ua%u64 - INT64_LOWER_LIMIT)
+            diff_u = diff/separator 
+            diff_l = mod(diff, separator)
+   
+            upper = INT64_UPPER_LIMIT/separator + diff_u
+            lower = mod(INT64_UPPER_LIMIT, separator) + diff_l + 1
+
+            res = mod( mod(upper, n)*mod(separator, n) + mod(lower, n), n)
+
+         end block
+      end if
+
+   end function uint64_mod_int32
+
+
+   pure elemental function uint64_mod_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint64), intent(in) :: ua
+      integer(int64), intent(in) :: b
+      type(uint64) :: res
+
+      if (ua%u64 >= 0 ) then
+         res = mod(ua%u64, b)
+      else  
+         block
+            integer(int64) :: upper, lower, diff, diff_u, diff_l
+            integer(int64), parameter :: separator = 10_8**2
+            integer(int64) :: n
+
+            n = b
+
+            diff = (ua%u64 - INT64_LOWER_LIMIT)
+            diff_u = diff/separator 
+            diff_l = mod(diff, separator)
+   
+            upper = INT64_UPPER_LIMIT/separator + diff_u
+            lower = mod(INT64_UPPER_LIMIT, separator) + diff_l + 1
+
+            res = mod( mod(upper, n)*mod(separator, n) + mod(lower, n), n)
+
+         end block
+      end if
+
+   end function uint64_mod_int64
 
 end module mod_m
