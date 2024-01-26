@@ -2,7 +2,7 @@ module mod_m
    use :: uint8_t 
    use :: uint16_t 
    use :: uint32_t
-   use :: uint64_m
+   use :: uint64_t
    use :: assignment_m
    implicit none
 
@@ -23,8 +23,8 @@ module mod_m
       module procedure :: uint32_mod_int32, int32_mod_uint32
       module procedure :: uint32_mod_int64, int64_mod_uint32
 
-      ! module procedure :: uint64_mod_int32
-      ! module procedure :: uint64_mod_int64
+      module procedure :: uint64_mod_int32
+      module procedure :: uint64_mod_int64
    end interface
 
 contains
