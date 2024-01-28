@@ -102,7 +102,7 @@ end interface
 
 In standard Fortran, unsigned integers don't exist, so you must use the equivalent signed `c_int` type when passing arguments to C functions.
 
-The `uint32` type from this package corresponding to the C `unsigned int` type. You can pass its components to C functions as demonstrated below.
+The `uint32` type from this package corresponding to the C `unsigned int` type. You can pass it to C functions as demonstrated below.
 
 
 ```fortran
