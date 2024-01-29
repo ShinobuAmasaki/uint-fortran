@@ -3,6 +3,7 @@ module division_m
    use :: uint8_t
    use :: uint16_t 
    use :: uint32_t
+   use :: uint64_t
    use :: assignment_m
    implicit none
    
@@ -22,6 +23,10 @@ module division_m
       module procedure :: uint32_div_uint32
       module procedure :: uint32_div_int32, int32_div_uint32
       module procedure :: uint32_div_int64, int64_div_uint32
+      
+      module procedure :: uint64_div_uint64
+      module procedure :: uint64_div_int32
+      module procedure :: uint64_div_int64
    end interface 
 
 
@@ -237,5 +242,118 @@ contains
       res = a / cast_to_int64(ub)
    end function int64_div_uint32
 
+!-- uint64 -----------------------------------------------------------!
+
+   pure elemental function uint64_div_uint64 (ua, ub) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint64), intent(in) :: ua, ub
+      integer(int64) :: res
+
+      if (ua%u64 >= 0 .and. ub%u64 >= 0) then
+         res = ua%u64 / ub%u64
+      
+      else if (ua%u64 < 0 .and. ub%u64 >=0) then
+         res = uint64_div_int64(ua, ub%u64)
+      
+      else if (ua%u64 >= 0 .and. ub%u64 < 0) then
+         res = 0
+
+      else if (ua%u64 < 0 .and. ub%u64 < 0) then
+         if (ua%u64 >= ub%u64) then
+            res = 1
+         else
+            res = 0
+         end if
+      end if
+   end function uint64_div_uint64
+
+
+   pure elemental function uint64_div_int32 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      implicit none
+      type(uint64), intent(in) :: ua
+      integer(int32), intent(in) :: b
+
+      integer(int64) :: res, b_8
+
+      b_8 = b
+
+      res = uint64_div_int64(ua, b_8)
+
+   end function uint64_div_int32
+      
+
+   pure elemental function uint64_div_int64 (ua, b) result(res)
+      use, intrinsic :: iso_fortran_env
+      use :: greater_than_m
+      use :: subtraction_m
+      use :: assignment_m
+
+      implicit none
+      type(uint64), intent(in) :: ua 
+      integer(int64), intent(in) :: b
+
+      type(uint64) :: dividend
+      type(uint64) :: cache, ans
+      integer(int64) :: divisor 
+      integer(int64) :: res
+      logical :: is_minus
+       
+
+      dividend = ua
+      divisor = b
+
+      if (ua%u64 >= 0) then
+         res = ua%u64 / divisor
+         return
+      end if
+
+
+      is_minus = .false. 
+      if (divisor < 0) then
+         is_minus = .true.
+         divisor = - divisor
+      end if
+
+
+      block
+         integer(int64) :: shifted, k
+
+         shifted = divisor
+         k = 0
+         do while (shifted > 0)
+            k = k + 1
+            shifted = ishft(shifted, -1)
+         end do
+         k = 64 - k
+
+
+         ans = 0
+         shifted = divisor
+         
+         do while (k >= 0)
+
+            shifted = int(ishft(divisor, k), kind=int64) 
+
+            if (dividend >= shifted) then
+               dividend = dividend - shifted
+               
+               cache = ishft(1, k)
+               
+               ans = ibset(ans%u64, k)
+
+            end if
+
+            k = k -1
+         end do
+
+      end block
+
+      res = ans%u64
+
+      if (is_minus) res = - res
+         
+   end function uint64_div_int64
 
 end module division_m

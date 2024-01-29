@@ -3,7 +3,7 @@ module uint64_m
    use :: assignment_m, only: assignment(=)
    use :: addition_m, only: operator(+)
    use :: subtraction_m, only: operator(-)
-   ! No other arithmetic operators will be provided. 
+   use :: division_m, only: operator( / )
 
    use :: equivalence_m, only: operator(==), operator(/=)
    use :: greater_than_m, only: operator(>), operator(>=)

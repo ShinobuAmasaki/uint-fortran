@@ -254,12 +254,15 @@ The currently implemented features are:
 - `type(uint64)`,
 - Assignment operator overload,
 - Comparison operator overloads,
-- Arithmetic operator overloads for addition and subtraction,
-- `write` statement (unformatted and formatted, formatted is asterisk only).
+- Arithmetic operator overloads for addition, subtraction, and division.
+- `mod` procedure overload,
+- `write` statement (unformatted and formatted, formatted is asterisk only),
 
 Since `integer(int128)`, which includes the entire `type(uint64)`, is not available,
 no type conversions are yet provided.
-Therefore, arithmetic operations involving `type(uint64)` return `type(uint64)`.
+Therefore, addition and subtraction operations involving `type(uint64)` return `type(uint64)`.
+Additionally, the return value of division is of type `int64`, so do not divide values greater than or equal to 9223372036854775808 by less than 2.
+
 
 Please note that in the GNU Fortran, basically writing a numerical literal exceeding 
 9223372036854775807 (that is maximum value of a 64-bit signed integer) will result in a compile time error.
